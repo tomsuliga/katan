@@ -1,12 +1,12 @@
-package org.suliga.katan;
+package org.suliga.toba;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class KatanApplication {
+public class TobaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(KatanApplication.class, args);
+		SpringApplication.run(TobaApplication.class, args);
 	}
 }
