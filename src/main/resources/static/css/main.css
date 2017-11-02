@@ -11,8 +11,74 @@ h1 {
 }
 
 div#gameSpace {
-	width: 800px;
-	height: 600px;
-	background-color: #ccc;
+	width: 1300px;
+	height: 1000px;
+	background-color: gray;
 	margin-left: 1em;
 }
+
+div.topLeft, div.topRight, div.bottomLeft, div.bottomRight {
+	width: 55px;
+	height: 10px;
+}
+
+div.middleVert {
+	width: 10px;
+	height: 50px;
+	float: left;
+	margin-top: 15px;
+}
+
+div.topLeft, div.topRight, div.middleVert, div.bottomLeft, div.bottomRight {
+	background-color: #aaa;
+}
+
+div.topLeft {
+	float: left;
+	transform: rotate(-30deg);
+}
+
+div.topRight {
+	float: left;
+	transform: rotate(30deg);
+}
+
+div.bottomLeft {
+	float: left;
+	transform: rotate(30deg);
+}
+
+div.bottomRight {
+	float: left;
+	transform: rotate(-30deg);
+}
+
+div.clearBoth {
+	clear: both;
+}
+
+div.middleResource {
+	width: 100px;
+	height: 100px;
+	float: left;
+	background-color: blue;
+	border-radius: 50px;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+div.halfSpace {
+	width: 50px;
+	height: 1px;
+	float: left;
+}
+
+div.singleHex {
+	padding-top: 20px;
+	padding-left: 0px;
+	width: 130px;
+	height: 110px;
+	float: left;
+}
+
+

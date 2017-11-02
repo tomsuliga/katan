@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 	
-	@GetMapping({ "/test", "/index", "/home", "/" })
+	@GetMapping({ "/index", "/home", "/" })
 	public String getSynonym(Model model) {
 		return "redirect:toba";
 	}
