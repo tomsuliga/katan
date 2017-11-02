@@ -11,10 +11,10 @@ h1 {
 }
 
 div#gameSpace {
-	width: 1300px;
-	height: 1000px;
-	background-color: gray;
-	margin-left: 1em;
+	width: 1920px;
+	height: 1080px;
+	background-color: #444;
+	//margin-left: 1em;
 }
 
 div.topLeft, div.topRight, div.bottomLeft, div.bottomRight {
