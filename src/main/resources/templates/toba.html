@@ -69,6 +69,7 @@ function init() {
 	cornerit(startX,startY,lineLength,1, 2, "#0f0");
 	cornerit(startX,startY,lineLength,2, 1, "#00f");
 	cornerit(startX,startY,lineLength,3, 2, "#ff0");
+	cornerit(startX,startY,lineLength,3, 3, "#ff0");
 }
 
 function cornerit(centerX, centerY, length, col, row, color) {
@@ -77,18 +78,34 @@ function cornerit(centerX, centerY, length, col, row, color) {
 	let deltaX = 2 * x * col;
 	let deltaY = row*1.5*length;
 	
-	if (col % 2 == 0) {
+	if (row % 2 == 1) {
 		deltaY += .5 * length;
 	}
 
 	ctx.lineWidth = 2;
 	
+	if (color == "#f00" || row == 3) {
+		// Circle
+		ctx.beginPath();
+		ctx.arc(centerX + deltaX, deltaY + centerY - length, .35 * length, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color;
+		ctx.fill();
+		
+		// Border
+		ctx.lineWidth = 3;
+	    ctx.strokeStyle = '#000';
+	    ctx.stroke();	      
+	}
+
+	// Circle
 	ctx.beginPath();
-	ctx.arc(centerX + deltaX, deltaY + centerY - length, .3 * length, 0, Math.PI*2, true); 
+	ctx.arc(centerX + deltaX, deltaY + centerY - length, .2 * length, 0, Math.PI*2, true); 
 	ctx.closePath();
 	ctx.fillStyle = color;
 	ctx.fill();
 	
+	// Border
 	ctx.lineWidth = 3;
     ctx.strokeStyle = '#000';
     ctx.stroke();	      
