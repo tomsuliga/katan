@@ -76,6 +76,7 @@ function drawImprovement(col,row,improvement,owner) {
 		color = "#dd0";
 	}
 	
+	// Draw large circle first - if needed
 	if (improvement == "CITY") {
 		let xy = getXY(col,row);
 		// Circle
@@ -92,6 +93,7 @@ function drawImprovement(col,row,improvement,owner) {
 	    ctx.stroke();	      
 	}
 	
+	// Draw small circle by itself or on top of large circle
 	if (improvement == "TOWN" || improvement == "CITY") {
 		let xy = getXY(col,row);
 		// Circle
@@ -113,7 +115,7 @@ function lineIt(col, row, col2, row2) {
 	let fromPoint = getXY(col,row);
 	let toPoint = getXY(col2,row2);	
 	ctx.beginPath();
-	ctx.lineWidth = 1;
+	ctx.lineWidth = 2;
     ctx.strokeStyle = '#000';
     ctx.moveTo(fromPoint[0], fromPoint[1]);
 	ctx.lineTo(toPoint[0], toPoint[1]);
