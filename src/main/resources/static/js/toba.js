@@ -11,18 +11,28 @@ var roads;
 let separation = 80;
 let x = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
 
+var imgGreen = new Image();
+imgGreen.src = "img/green.png";
+var imgRed = new Image();
+imgRed.src = "img/red.png";
+var imgBlue = new Image();
+imgBlue.src = "img/blue.png";
+//imgGreen.onload = init;
+var imgPurple = new Image();
+imgPurple.src = "img/purple.png";
+var imgYellow = new Image();
+imgYellow.src = "img/yellow.png";
+
+function init() {
+	var payload = JSON.stringify( { 'a':'b' } );
+	stomp.send('/stomp/toba/getGame', {}, payload);
+}
 
 $(document).ready(function() {
 	c = document.getElementById("canvasHex");
 	ctx = c.getContext("2d");
 	console.log("Window loaded and ready");
 });
-
-function oldCode() {
-	var image5 = new Image();
-	image5.src = "img/frank.jpg";
-	image5.onload = init;
-}
 
 function drawBoard() {
 	drawSpots();
@@ -203,17 +213,23 @@ function drawPlots() {
 		} else if (plots[i].resource == "ROBBER") {
 			ctx.fillStyle = "#444";
 		} else if (plots[i].resource == "ONE") {
-			ctx.fillStyle = "#a44";
+			//ctx.fillStyle = "#a44";
+			ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
 		} else if (plots[i].resource == "TWO") {
-			ctx.fillStyle = "#4a4";
+			//ctx.fillStyle = "#4a4";
+			ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
 		} else if (plots[i].resource == "THREE") {
-			ctx.fillStyle = "#44a";
+			//ctx.fillStyle = "#44a";
+			ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
 		} else if (plots[i].resource == "FOUR") {
-			ctx.fillStyle = "#a4a";
+			//ctx.fillStyle = "#a4a";
+			ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
 		} else if (plots[i].resource == "FIVE") {
-			ctx.fillStyle = "#aa4";
+			//ctx.fillStyle = "#aa4";
+			ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");
 		}
 		
+	    //context.fillRect(0, 0, 300, 300);
 		ctx.fill();
 		
 		if (plots[i].die != 0) {
