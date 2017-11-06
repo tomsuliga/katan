@@ -28,17 +28,10 @@ public class MainController {
 		return "toba";
 	}
 	
-	@MessageMapping("/toba/getVertices")
-	public void handleGetVertices() {
+	@MessageMapping("/toba/getGame")
+	public void handleGetGame() {
 		//logger.info("Received stomp msg: " + incoming);
 		Game game = new Game();
-		simpMessagingTemplate.convertAndSend("/topic/result/getVertices", game.getVertices());
-	}
-
-	@MessageMapping("/toba/getPlots")
-	public void handleGetPlots() {
-		//logger.info("Received stomp msg: " + incoming);
-		Game game = new Game();
-		simpMessagingTemplate.convertAndSend("/topic/result/getPlots", game.getPlots());
+		simpMessagingTemplate.convertAndSend("/topic/result/getGame", game);
 	}
 }

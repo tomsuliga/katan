@@ -17,24 +17,7 @@ public class Game {
 	
 	private List<Plot> plots;
 	
-	private String layout[] = {
-			"....x.x.x.x....", // 0 - 14
-			"...x.x.x.x.x...", // 15 - 29
-			"...x.x.x.x.x...", // 30 - 44
-			"..x.x.x.x.x.x..", // 45 - 59
-			"..x.x.x.x.x.x..", // 60 - 74
-			".x.x.x.x.x.x.x.", // 75 - 89
-			".x.x.x.x.x.x.x.", // 90 - 104 99
-			"x.x.x.x.x.x.x.x", // 105 - 119 // 109 111
-			"x.x.x.x.x.x.x.x", // 120 - 134
-			".x.x.x.x.x.x.x.", // 135 - 149 // 144
-			".x.x.x.x.x.x.x.", // 150 - 164
-			"..x.x.x.x.x.x..", // 165 - 179
-			"..x.x.x.x.x.x..", // 180 - 194
-			"...x.x.x.x.x...", // 195 - 209
-			"...x.x.x.x.x...", // 210 - 224
-			"....x.x.x.x...."  // 225 - 239
-	};
+	private List<Road> roads;
 	
 	public Game() {
 		init();
@@ -44,8 +27,28 @@ public class Game {
 		vertices = new Vertex[NUM_COLS][NUM_ROWS];
 		adjMap  = new HashMap<>();
 		plots = new ArrayList<>();
+		roads = new ArrayList<>();
 		int id = 0;
 		Vertex v = null;
+		
+		String layout[] = {
+				"....x.x.x.x....", // 0 - 14
+				"...x.x.x.x.x...", // 15 - 29
+				"...x.x.x.x.x...", // 30 - 44
+				"..x.x.x.x.x.x..", // 45 - 59
+				"..x.x.x.x.x.x..", // 60 - 74
+				".x.x.x.x.x.x.x.", // 75 - 89
+				".x.x.x.x.x.x.x.", // 90 - 104
+				"x.x.x.x.x.x.x.x", // 105 - 119
+				"x.x.x.x.x.x.x.x", // 120 - 134
+				".x.x.x.x.x.x.x.", // 135 - 149
+				".x.x.x.x.x.x.x.", // 150 - 164
+				"..x.x.x.x.x.x..", // 165 - 179
+				"..x.x.x.x.x.x..", // 180 - 194
+				"...x.x.x.x.x...", // 195 - 209
+				"...x.x.x.x.x...", // 210 - 224
+				"....x.x.x.x...."  // 225 - 239
+		};
 		
 		// Create full matrix grid for all possible points - visible and hidden
 		for (int row=0;row<NUM_ROWS;row++) {
@@ -206,23 +209,31 @@ public class Game {
 		// temp
 		adjMap.get(66).setImprovement(Improvement.TOWN);
 		adjMap.get(66).setOwner(Owner.P1);
+		roads.add(new Road(Owner.P1, adjMap.get(66), adjMap.get(51)));	
 		adjMap.get(68).setImprovement(Improvement.CITY);
 		adjMap.get(68).setOwner(Owner.P1);
+		roads.add(new Road(Owner.P1, adjMap.get(68), adjMap.get(84)));
 
 		adjMap.get(109).setImprovement(Improvement.TOWN);
 		adjMap.get(109).setOwner(Owner.P2);
+		roads.add(new Road(Owner.P2, adjMap.get(109), adjMap.get(124)));
 		adjMap.get(111).setImprovement(Improvement.CITY);
 		adjMap.get(111).setOwner(Owner.P2);
+		roads.add(new Road(Owner.P2, adjMap.get(111), adjMap.get(95)));
 
 		adjMap.get(157).setImprovement(Improvement.TOWN);
 		adjMap.get(157).setOwner(Owner.P3);
+		roads.add(new Road(Owner.P3, adjMap.get(157), adjMap.get(171)));
 		adjMap.get(155).setImprovement(Improvement.CITY);
 		adjMap.get(155).setOwner(Owner.P3);
+		roads.add(new Road(Owner.P3, adjMap.get(155), adjMap.get(171)));
 
 		adjMap.get(99).setImprovement(Improvement.TOWN);
 		adjMap.get(99).setOwner(Owner.P4);
+		roads.add(new Road(Owner.P4, adjMap.get(99), adjMap.get(84)));
 		adjMap.get(144).setImprovement(Improvement.CITY);
 		adjMap.get(144).setOwner(Owner.P4);
+		roads.add(new Road(Owner.P4, adjMap.get(144), adjMap.get(130)));
 }
 	
 	private void buildHexEdges(int id) {
@@ -255,6 +266,10 @@ public class Game {
 
 	public List<Plot> getPlots() {
 		return plots;
+	}
+
+	public List<Road> getRoads() {
+		return roads;
 	}
 }
 

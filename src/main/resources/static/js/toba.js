@@ -4,8 +4,10 @@
 
 var c;
 var ctx;
+var game;
 var vertices;
 var plots;
+var roads;
 let separation = 80;
 let x = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
 
@@ -23,14 +25,32 @@ function oldCode() {
 }
 
 function drawBoard() {
+	drawSpots();
+	drawLines();
+   	drawPlots();
+	drawRoads();
+   	drawImprovements();
+}
+
+function drawRoads() {
+	for (let i=0;i<roads.length;i++) {
+		let r = roads[i];
+		console.log("r=" + r.owner + "," + r.fromVertex.col + "," + r.fromVertex.row + "," + r.toVertex.col + "," + r.toVertex.row);
+		lineIt(r.owner, r.fromVertex.col, r.fromVertex.row, r.toVertex.col, r.toVertex.row);
+	}
+}
+
+function drawSpots() {
 	for (let row=0;row<16;row++) {
 		for (let col=0;col<15;col++) {
 			if (!vertices[col][row].hidden) {
 				drawSpot(col,row);
 			}
 		}
-	}
-	
+	}	
+}
+
+function drawLines() {
 	for (let row=0;row<16;row++) {
 		for (let col=0;col<15;col++) {
 			if (!vertices[col][row].hidden) {
@@ -43,20 +63,20 @@ function drawBoard() {
 						let col2 = id2 % 15;
 						let row2 = parseInt(id2 / 15, 10);
 						//console.log(col2 + "," + row2);
-						lineIt(col,row,col2,row2);
+						lineIt("NONE",col,row,col2,row2);
 					}
 				}
 			}
 		}
 	}
+}
 
-   	drawPlots();
-    
+function drawImprovements() {
 	for (let row=0;row<16;row++) {
 		for (let col=0;col<15;col++) {
 			drawImprovement(col,row, vertices[col][row].improvement, vertices[col][row].owner);
 		}
-	}
+	}	
 }
 
 function drawImprovement(col,row,improvement,owner) {
@@ -64,17 +84,7 @@ function drawImprovement(col,row,improvement,owner) {
 		return;
 	}
 	
-	let color = "#bbb";
-	
-	if (owner == "P1") {
-		color = "#d00";
-	} else if (owner == "P2") {
-		color = "#0d0";
-	} else if (owner == "P3") {
-		color = "#00d";
-	} else if (owner == "P4") {
-		color = "#dd0";
-	}
+	let color = getOwnerColor(owner);
 	
 	// Draw large circle first - if needed
 	if (improvement == "CITY") {
@@ -111,12 +121,33 @@ function drawImprovement(col,row,improvement,owner) {
 	}
 }
 
-function lineIt(col, row, col2, row2) {
+function getOwnerColor(owner) {
+	let color = "#bbb";
+	
+	if (owner == "P1") {
+		color = "#d00";
+	} else if (owner == "P2") {
+		color = "#0d0";
+	} else if (owner == "P3") {
+		color = "#00d";
+	} else if (owner == "P4") {
+		color = "#dd0";
+	}
+	
+	return color;
+}
+
+function lineIt(owner, col, row, col2, row2) {
 	let fromPoint = getXY(col,row);
 	let toPoint = getXY(col2,row2);	
 	ctx.beginPath();
-	ctx.lineWidth = 2;
-    ctx.strokeStyle = '#000';
+	if (owner == "NONE") {
+		ctx.lineWidth = 2;
+	    ctx.strokeStyle = '#000';
+	} else {
+		ctx.lineWidth = 10;
+	    ctx.strokeStyle = getOwnerColor(owner);
+	}
     ctx.moveTo(fromPoint[0], fromPoint[1]);
 	ctx.lineTo(toPoint[0], toPoint[1]);
 	console.log("lineIt: " + separation + "," + x + ", " + fromPoint[0] + "," + fromPoint[1] + "," + toPoint[0] + "," + toPoint[1]);
@@ -303,21 +334,16 @@ var stompSock = new SockJS(stompUrl);
 var stomp = Stomp.over(stompSock);
 
 stomp.connect({}, function(frame) {
-    stomp.subscribe('/topic/result/getVertices', function (message) {
-    	vertices = JSON.parse(message.body);
- 
-    	var payload = JSON.stringify( { 'a':'b' } );
-    	stomp.send('/stomp/toba/getPlots', {}, payload);
-    });
-    
-    stomp.subscribe('/topic/result/getPlots', function (message) {
-    	plots = JSON.parse(message.body);
-        //console.log("vertices = " + vertices);
+    stomp.subscribe('/topic/result/getGame', function (message) {
+    	game = JSON.parse(message.body);
+    	vertices = game.vertices;
+    	plots = game.plots;
+    	roads = game.roads;
        	drawBoard();
    });
     
 	var payload = JSON.stringify( { 'a':'b' } );
-	stomp.send('/stomp/toba/getVertices', {}, payload);
+	stomp.send('/stomp/toba/getGame', {}, payload);
 });
 
 
