@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="ISO-8859-1">
 	<title>Monsters of Toba</title>
@@ -8,206 +8,24 @@
 	<link href="css/main.css" type="text/css" rel="stylesheet">
 </head>
 <body>
+<!-- 
+			<block th:each="row:${#numbers.sequence(0,15)}">
+				<block th:each="col:${#numbers.sequence(0,14)}">
+					<span th:text="${vertices[col][row]}"></span>
+				</block>
+				<br>				
+			</block>			
+-->
 <div id="gameSpace">
-<div class="halfSpace"></div>
-<canvas id="canvasHex" width="1200" height="1000" style="background-color: #444;">Your browser does not support the HTML5 canvas tag.</canvas>
-
-<script>
-var c = document.getElementById("canvasHex");
-var ctx = c.getContext("2d");
-let lineLength = 110;
-let startX = 150;
-let startY = 150;
-
-let r1 = "#611";
-let r2 = "#161";
-let r3 = "#116";
-let r4 = "#551";
-let r5 = "#515";
-let robber = "#333";
-
-var image = new Image();
-image.src = "img/web.png";
-var image2 = new Image();
-image2.src = "img/ghost.gif";
-var image3 = new Image();
-image3.src = "img/wolf.jpg";
-var image4 = new Image();
-image4.src = "img/mummy.jpg";
-var image5 = new Image();
-image5.src = "img/frank.jpg";
-image5.onload = init;
-
-function init() {
-	hexit(startX,startY,lineLength,1, 0, r1, 5);
-	hexit(startX,startY,lineLength,2, 0, r2, 10);
-	hexit(startX,startY,lineLength,3, 0, r3, 8);
-	
-	let x = Math.sqrt(lineLength*lineLength - ((lineLength/2)*(lineLength/2)));
-	
-	hexit(startX+x,startY,lineLength,0, 1, r3, 2);
-	hexit(startX+x,startY,lineLength,1, 1, r5, 9);
-	hexit(startX+x,startY,lineLength,2, 1, r4, 11);
-	hexit(startX+x,startY,lineLength,3, 1, r2, 4);
-	
-	hexit(startX,startY,lineLength,0, 2, r4, 6);
-	hexit(startX,startY,lineLength,1, 2, r1, 4);
-	hexit(startX,startY,lineLength,2, 2, robber, 0);
-	hexit(startX,startY,lineLength,3, 2, r5, 3);
-	hexit(startX,startY,lineLength,4, 2, r1, 11);
-	
-	hexit(startX+x,startY,lineLength,0, 3, r2, 3);
-	hexit(startX+x,startY,lineLength,1, 3, r3, 5);
-	hexit(startX+x,startY,lineLength,2, 3, r4, 6);
-	hexit(startX+x,startY,lineLength,3, 3, r2, 12);
-	
-	hexit(startX,startY,lineLength,1, 4, r5, 8);
-	hexit(startX,startY,lineLength,2, 4, r1, 10);
-	hexit(startX,startY,lineLength,3, 4, r3, 9);
-	
-	cornerit(startX,startY,lineLength,1, 4, "#f00");
-	cornerit(startX,startY,lineLength,1, 2, "#0f0");
-	cornerit(startX,startY,lineLength,2, 1, "#00f");
-	cornerit(startX,startY,lineLength,3, 2, "#ff0");
-	cornerit(startX,startY,lineLength,3, 3, "#ff0");
-}
-
-function cornerit(centerX, centerY, length, col, row, color) {
-	let x = Math.sqrt(length*length - ((length/2)*(length/2)));
-	let y = length  / 2;
-	let deltaX = 2 * x * col;
-	let deltaY = row*1.5*length;
-	
-	if (row % 2 == 1) {
-		deltaY += .5 * length;
-	}
-
-	ctx.lineWidth = 2;
-	
-	if (color == "#f00" || row == 3) {
-		// Circle
-		ctx.beginPath();
-		ctx.arc(centerX + deltaX, deltaY + centerY - length, .35 * length, 0, Math.PI*2, true); 
-		ctx.closePath();
-		ctx.fillStyle = color;
-		ctx.fill();
-		
-		// Border
-		ctx.lineWidth = 3;
-	    ctx.strokeStyle = '#000';
-	    ctx.stroke();	      
-	}
-
-	// Circle
-	ctx.beginPath();
-	ctx.arc(centerX + deltaX, deltaY + centerY - length, .2 * length, 0, Math.PI*2, true); 
-	ctx.closePath();
-	ctx.fillStyle = color;
-	ctx.fill();
-	
-	// Border
-	ctx.lineWidth = 3;
-    ctx.strokeStyle = '#000';
-    ctx.stroke();	      
-}
-
-function hexit(centerX, centerY, length, col, row, color, die) {
-	let x = Math.sqrt(length*length - ((length/2)*(length/2)));
-	console.log("x=" + x);
-	let y = length  / 2;
-	let deltaX = 2 * x * col;
-	let deltaY = row*1.5*length;
-
-	ctx.beginPath();
-
-	ctx.lineWidth = 2;
-    ctx.strokeStyle = '#222';
-
-    ctx.moveTo(deltaX + centerX, deltaY + centerY - length);
-	ctx.lineTo(deltaX + centerX + x, deltaY + centerY - y);
-	ctx.lineTo(deltaX + centerX + x, deltaY + centerY + y);
-	ctx.lineTo(deltaX + centerX, deltaY + centerY + length);
-	ctx.lineTo(deltaX + centerX - x, deltaY + centerY + y);
-	ctx.lineTo(deltaX + centerX - x, deltaY + centerY - y);
-	ctx.lineTo(deltaX + centerX, deltaY + centerY - length);
-	ctx.stroke();
-	
-	if (color == "#515") {
-		ctx.fillStyle = ctx.createPattern(image5, "repeat");
-	    ctx.fill();
-	} else if (color == "#551") {
-		ctx.fillStyle = ctx.createPattern(image4, "repeat");
-	    ctx.fill();
-	} else if (color == "#611") {
-		ctx.fillStyle = ctx.createPattern(image3, "repeat");
-	    ctx.fill();
-	} else if (color == "#161") {
-		ctx.fillStyle = ctx.createPattern(image, "repeat");
-	    ctx.fill();
-	} else if (color == "#116") {
-		ctx.fillStyle = ctx.createPattern(image2, "repeat");
-		ctx.fill();
-	} else {
-		ctx.fillStyle = color;
-		ctx.fill();
-	}
-	
-	//if (die != 0) {
-		ctx.beginPath();
-		ctx.arc(centerX + deltaX, deltaY + centerY, .3 * length, 0, Math.PI*2, true); 
-		ctx.closePath();
-		ctx.fillStyle = "#999";
-		ctx.globalAlpha = 0.75;
-		if (die == 12) {
-			ctx.fillStyle = "#fff";
-			ctx.globalAlpha = 1.0;
-		} else if (die == 0) {
-			ctx.fillStyle = "#000";
-			ctx.globalAlpha = 1.0;
-		}
-		ctx.fill();
-		ctx.globalAlpha = 1.0;
-		
-		ctx.lineWidth = 1;
-	    ctx.strokeStyle = '#000';
-	    ctx.stroke();
-	      
-		ctx.fillStyle = "black";
-		ctx.font = "30px Arial";
-		if (die == 0) {
-			ctx.fillStyle = "#f00";
-			ctx.font = "46px Arial";
-		} else if (die == 6 || die == 8) {
-			ctx.fillStyle = "#700";
-			ctx.font = "36px Arial";
-		} else if (die == 2 || die == 12) {
-			ctx.font = "20px Arial";
-		}
-		let offsetX = 0.14;
-		let offsetY = 0.1;
-		if (die < 10) {
-			offsetX = 0.075;
-		}
-		let ch = "" + die + ((die==6 || die==9) ? "." : "");
-		if (die == 0) {
-			ch = "X";
-			offsetX = 0.12;
-			offsetY = 0.14;
-		}
-		ctx.fillText(ch, centerX + deltaX - (offsetX * length), deltaY + centerY + (offsetY * length));
-	//}
-}
-</script>
-
+	<canvas id="canvasHex" width="1910" height="1070" style="background-color: #773;">Your browser does not support the HTML5 canvas tag.</canvas>
 </div>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/toba.js"></script>
 </body>
 </html>
-
-
-
-
-
-
-
 
 

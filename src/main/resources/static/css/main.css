@@ -7,13 +7,13 @@
 
 h1 {
 	color: blue;
-	margin-left: .5em;
+	//margin-left: .5em;
 }
 
 div#gameSpace {
 	width: 1920px;
 	height: 1080px;
-	background-color: #444;
+	background-color: #774;
 	//margin-left: 1em;
 }
 
@@ -26,7 +26,7 @@ div.middleVert {
 	width: 10px;
 	height: 50px;
 	float: left;
-	margin-top: 15px;
+	//margin-top: 15px;
 }
 
 div.topLeft, div.topRight, div.middleVert, div.bottomLeft, div.bottomRight {
@@ -63,8 +63,8 @@ div.middleResource {
 	float: left;
 	background-color: blue;
 	border-radius: 50px;
-	margin-left: 5px;
-	margin-right: 5px;
+	//margin-left: 5px;
+	//margin-right: 5px;
 }
 
 div.halfSpace {
@@ -74,8 +74,8 @@ div.halfSpace {
 }
 
 div.singleHex {
-	padding-top: 20px;
-	padding-left: 0px;
+	//padding-top: 20px;
+	//padding-left: 0px;
 	width: 130px;
 	height: 110px;
 	float: left;
