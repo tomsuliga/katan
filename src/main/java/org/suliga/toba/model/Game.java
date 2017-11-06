@@ -102,14 +102,226 @@ public class Game {
 		buildHexEdges(190);
 		
 		List<Integer> dice = Arrays.asList(2,3,4,5,6,8,9,10,11,12,6,8,5,9,4,10,3,11);
-		Collections.shuffle(dice);
+		boolean conflict = true;
+		while (conflict) {
+			// Cannot have 6 or 8 next to each other
+			Collections.shuffle(dice);
+			conflict = false;
+			for (int i=0;i<dice.size();i++) {
+				int die = dice.get(i);
+				if (die == 6 || die == 8) {
+					if (i == 0) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+3);
+						int d3 = dice.get(i+4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 1) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+3);
+						int d3 = dice.get(i+4);
+						int d4 = dice.get(i-1);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 2) {
+						int d1 = dice.get(i+3);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-1);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 3) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i+5);
+						int d4 = dice.get(i-3);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 4) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-1);
+						int d4 = dice.get(i-3);
+						int d5 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8 || d5 == 6 || d5 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 5) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-1);
+						int d4 = dice.get(i-3);
+						int d5 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8 || d5 == 6 || d5 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 6) {
+						int d1 = dice.get(i+3);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-1);
+						int d4 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 7) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 8) {
+						int d1 = dice.get(i-1);
+						int d2 = dice.get(i+3);
+						int d3 = dice.get(i+4);
+						int d4 = dice.get(i-4);
+						int d5 = dice.get(i-5);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8 || d5 == 6 || d5 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 9) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i+5);
+						int d4 = dice.get(i-3);
+						int d5 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8 || d5 == 6 || d5 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 10) {
+						int d1 = dice.get(i-1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 11) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+4);
+						int d3 = dice.get(i-3);
+						int d4 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 12) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+3);
+						int d3 = dice.get(i+4);
+						int d4 = dice.get(i-1);
+						int d5 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8 || d5 == 6 || d5 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 13) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i+3);
+						int d3 = dice.get(i+4);
+						int d4 = dice.get(i-1);
+						int d5 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8 || d5 == 6 || d5 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 14) {
+						int d1 = dice.get(i+3);
+						int d2 = dice.get(i-1);
+						int d3 = dice.get(i-4);
+						int d4 = dice.get(i-5);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 15) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i-3);
+						int d3 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 16) {
+						int d1 = dice.get(i+1);
+						int d2 = dice.get(i-1);
+						int d3 = dice.get(i-3);
+						int d4 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8 || d4 == 6 || d4 == 8) {
+							conflict = true;
+							break;
+						}
+					} else if (i == 17) {
+						int d1 = dice.get(i-1);
+						int d2 = dice.get(i-3);
+						int d3 = dice.get(i-4);
+						if (d1 == 6 || d1 == 8 || d2 == 6 || d2 == 8 || d3 == 6 || d3 == 8) {
+							conflict = true;
+							break;
+						}
+					}
+				}
+			}
+		}
 		
 		List<Resource> resources = Arrays.asList(
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
 				Resource.ONE, Resource.TWO, Resource.THREE);
-		Collections.shuffle(resources);
+		conflict = true;
+		while (conflict) {
+			Collections.shuffle(resources);
+			conflict = false;
+			for (int i=0;i<resources.size();i++) {
+				Resource r = resources.get(i);
+				if (i == 0) {
+					Resource r1 = resources.get(1);
+					Resource r2 = resources.get(3);
+					Resource r3 = resources.get(4);
+					if (r == r1 && r == r3) {
+						conflict = true;
+						break;
+					}
+					if (r == r2 && r == r3) {
+						conflict = true;
+						break;
+					}
+				} else if (i == 1) {
+					Resource r1 = resources.get(4);
+					Resource r2 = resources.get(5);
+					if (r == r1 && r == r2) {
+						conflict = true;
+						break;
+					}
+				} else if (i == 2) {
+					Resource r1 = resources.get(1);
+					Resource r2 = resources.get(5);
+					Resource r3 = resources.get(6);
+					if (r == r1 && r == r2) {
+						conflict = true;
+						break;
+					}
+					if (r == r2 && r == r3) {
+						conflict = true;
+						break;
+					}
+				}
+			}
+		}
 		
 		plots.add(new Plot(2,0,Resource.WATER,0));
 		plots.add(new Plot(3,0,Resource.WATER,0));
