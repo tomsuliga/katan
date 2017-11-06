@@ -54,12 +54,28 @@ function drawBoard() {
     
 	for (let row=0;row<16;row++) {
 		for (let col=0;col<15;col++) {
-			drawImprovement(col,row, vertices[col][row].improvement);
+			drawImprovement(col,row, vertices[col][row].improvement, vertices[col][row].owner);
 		}
 	}
 }
 
-function drawImprovement(col,row, improvement) {
+function drawImprovement(col,row,improvement,owner) {
+	if (improvement == "NONE") {
+		return;
+	}
+	
+	let color = "#bbb";
+	
+	if (owner == "P1") {
+		color = "#d00";
+	} else if (owner == "P2") {
+		color = "#0d0";
+	} else if (owner == "P3") {
+		color = "#00d";
+	} else if (owner == "P4") {
+		color = "#dd0";
+	}
+	
 	if (improvement == "CITY") {
 		let xy = getXY(col,row);
 		// Circle
@@ -67,7 +83,7 @@ function drawImprovement(col,row, improvement) {
 		ctx.beginPath();
 		ctx.arc(xy[0], xy[1], radius, 0, Math.PI*2, true); 
 		ctx.closePath();
-		ctx.fillStyle = "#a00";
+		ctx.fillStyle = color;
 		ctx.fill();
 		
 		// Border
@@ -83,7 +99,7 @@ function drawImprovement(col,row, improvement) {
 		ctx.beginPath();
 		ctx.arc(xy[0], xy[1], radius, 0, Math.PI*2, true); 
 		ctx.closePath();
-		ctx.fillStyle = "#a00";
+		ctx.fillStyle = color;
 		ctx.fill();
 		
 		// Border

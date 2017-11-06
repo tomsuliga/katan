@@ -24,10 +24,10 @@ public class Game {
 			"..x.x.x.x.x.x..", // 45 - 59
 			"..x.x.x.x.x.x..", // 60 - 74
 			".x.x.x.x.x.x.x.", // 75 - 89
-			".x.x.x.x.x.x.x.", // 90 - 104
-			"x.x.x.x.x.x.x.x", // 105 - 119
+			".x.x.x.x.x.x.x.", // 90 - 104 99
+			"x.x.x.x.x.x.x.x", // 105 - 119 // 109 111
 			"x.x.x.x.x.x.x.x", // 120 - 134
-			".x.x.x.x.x.x.x.", // 135 - 149
+			".x.x.x.x.x.x.x.", // 135 - 149 // 144
 			".x.x.x.x.x.x.x.", // 150 - 164
 			"..x.x.x.x.x.x..", // 165 - 179
 			"..x.x.x.x.x.x..", // 180 - 194
@@ -282,43 +282,41 @@ public class Game {
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
 				Resource.ONE, Resource.TWO, Resource.THREE);
+		
+		// Plot layout sequences that we don't want
+		int[][] badSeq = { {0,1,2}, {0,3,4}, {0,1,4}, {1,2,5}, {1,4,5}, {2,5,6},
+				           {3,4,5}, {4,5,6}, {3,7,8}, {3,4,8}, {5,6,9}, {6,9,10},
+				           {7,8,11}, {8,11,12}, {9,10,14}, {9,13,14}, {11,12,15},
+				           {12,15,16}, {13,14,17}, {11,12,13}, {12,13,14}, {15,16,17},
+				           {3,8,12,16}, {1,5,9,14}, {1,4,8,11}, {6,9,13,16},
+				           {1,4,8}, {4,8,11}, {1,2,4}, {9,13,16}, {8,12,16},
+				           {6,10,14}, {5,9,10}, {10,13,14}, {0,4,8},
+				           {1,5,9}, {6,9,14}, {11,12,16}, {12,13,17}, {13,16,17},
+				           {4,5,9}, {10,14,17}, {9,12,13}, {13,14,16}, {2,6,9}, {7,11,15},
+				           {2,4,5}, {1,2,6}, {4,5,8}, {4,8,12}, {9,13,17}, {1,5,6},
+				           {13,15,16}, {3,8,11}, {8,11,15}, {1,3,4}, {3,4,7}, {8,12,15},
+				           {9,10,13}, {2,5,9}, {5,9,13}, {2,6,10},
+				           {6,9,13}, {12,16,17}, {0,1,5}, {14,16,17}, {0,3,8}, {8,12,13},
+				           {11,15,16}, {0,3,7}, {3,8,12}, {5,9,14}, {9,14,17}, {7,8,12},
+				           {5,6,10}, {0,4,5}, {4,7,8}, {0,1,3}, {3,7,11},
+				           {7,11,12}, {12,13,15}, {12,13,16} };
+
 		conflict = true;
 		while (conflict) {
 			Collections.shuffle(resources);
 			conflict = false;
-			for (int i=0;i<resources.size();i++) {
-				Resource r = resources.get(i);
-				if (i == 0) {
-					Resource r1 = resources.get(1);
-					Resource r2 = resources.get(3);
-					Resource r3 = resources.get(4);
-					if (r == r1 && r == r3) {
-						conflict = true;
+			for (int i=0;i<badSeq.length;i++) {
+				boolean allSame = true;
+				Resource r = resources.get(badSeq[i][0]);
+				for (int j=1;j<badSeq[i].length;j++) {
+					if (r != resources.get(badSeq[i][j])) {
+						allSame = false;
 						break;
 					}
-					if (r == r2 && r == r3) {
-						conflict = true;
-						break;
-					}
-				} else if (i == 1) {
-					Resource r1 = resources.get(4);
-					Resource r2 = resources.get(5);
-					if (r == r1 && r == r2) {
-						conflict = true;
-						break;
-					}
-				} else if (i == 2) {
-					Resource r1 = resources.get(1);
-					Resource r2 = resources.get(5);
-					Resource r3 = resources.get(6);
-					if (r == r1 && r == r2) {
-						conflict = true;
-						break;
-					}
-					if (r == r2 && r == r3) {
-						conflict = true;
-						break;
-					}
+				}
+				if (allSame) {
+					conflict = true;
+					break;
 				}
 			}
 		}
@@ -369,8 +367,25 @@ public class Game {
 		
 		// temp
 		adjMap.get(66).setImprovement(Improvement.TOWN);
+		adjMap.get(66).setOwner(Owner.P1);
 		adjMap.get(68).setImprovement(Improvement.CITY);
-	}
+		adjMap.get(68).setOwner(Owner.P1);
+
+		adjMap.get(109).setImprovement(Improvement.TOWN);
+		adjMap.get(109).setOwner(Owner.P2);
+		adjMap.get(111).setImprovement(Improvement.CITY);
+		adjMap.get(111).setOwner(Owner.P2);
+
+		adjMap.get(157).setImprovement(Improvement.TOWN);
+		adjMap.get(157).setOwner(Owner.P3);
+		adjMap.get(155).setImprovement(Improvement.CITY);
+		adjMap.get(155).setOwner(Owner.P3);
+
+		adjMap.get(99).setImprovement(Improvement.TOWN);
+		adjMap.get(99).setOwner(Owner.P4);
+		adjMap.get(144).setImprovement(Improvement.CITY);
+		adjMap.get(144).setOwner(Owner.P4);
+}
 	
 	private void buildHexEdges(int id) {
 		adjMap.get(id).addAdjVertex(id+14);
