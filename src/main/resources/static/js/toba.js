@@ -135,11 +135,11 @@ function getOwnerColor(owner) {
 	let color = "#bbb";
 	
 	if (owner == "P1") {
-		color = "#d00";
+		color = "#f00";
 	} else if (owner == "P2") {
 		color = "#0d0";
 	} else if (owner == "P3") {
-		color = "#00d";
+		color = "#00e";
 	} else if (owner == "P4") {
 		color = "#dd0";
 	}
@@ -155,7 +155,7 @@ function lineIt(owner, col, row, col2, row2) {
 		ctx.lineWidth = 2;
 	    ctx.strokeStyle = '#000';
 	} else {
-		ctx.lineWidth = 10;
+		ctx.lineWidth = 12;
 	    ctx.strokeStyle = getOwnerColor(owner);
 	}
     ctx.moveTo(fromPoint[0], fromPoint[1]);
@@ -166,113 +166,174 @@ function lineIt(owner, col, row, col2, row2) {
 
 function drawPlots() {
 	console.log("plotit called");
+	let waterTurn = true;
+	
+	for (let j=0;j<2;j++) {
+		if (j == 1) {
+			waterTurn = false;
+		}
+		for (let i=0;i<plots.length;i++) {
+			if (!waterTurn && plots[i].resource == "WATER") {
+				continue;
+			}
+			if (waterTurn && plots[i].resource != "WATER") {
+				continue;
+			}
 
-	for (let i=0;i<plots.length;i++) {
-		let col = plots[i].col * 2;
-		let row = plots[i].row * 2;
-		
-		let colOffset = 0;
-		
-		if (plots[i].row > 0 && plots[i].row%2 == 1) {
-			colOffset = 1;
-		}
-		
-		ctx.beginPath();
-	
-		ctx.lineWidth = 1;
-	    ctx.strokeStyle = '#000';
-	    
-	    let offset1 = 0; //8;
-	    let offset2 = 0; //4;
-	
-		let p = getXY(col+colOffset,row);
-	    ctx.moveTo(p[0], p[1] + offset1);
-	
-		p = getXY(col+1+colOffset,row+1);
-	    ctx.lineTo(p[0] - offset1, p[1] + offset2);
-	
-		p = getXY(col+1+colOffset,row+2);
-	    ctx.lineTo(p[0]- offset1, p[1] - offset2);
-	
-		p = getXY(col+colOffset,row+3);
-	    ctx.lineTo(p[0], p[1] - offset1);
-	
-		p = getXY(col-1+colOffset,row+2);
-	    ctx.lineTo(p[0] + offset1, p[1] - offset2);
-	
-		p = getXY(col-1+colOffset,row+1);
-	    ctx.lineTo(p[0] + offset1, p[1] + offset2);
-	
-		p = getXY(col+colOffset,row);
-	    ctx.lineTo(p[0], p[1] + offset1);
-	   
-		ctx.stroke();
-		
-		if (plots[i].resource == "WATER") {
-			ctx.fillStyle = "#116";
-		} else if (plots[i].resource == "ROBBER") {
-			ctx.fillStyle = "#444";
-		} else if (plots[i].resource == "ONE") {
-			//ctx.fillStyle = "#a44";
-			ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
-		} else if (plots[i].resource == "TWO") {
-			//ctx.fillStyle = "#4a4";
-			ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
-		} else if (plots[i].resource == "THREE") {
-			//ctx.fillStyle = "#44a";
-			ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
-		} else if (plots[i].resource == "FOUR") {
-			//ctx.fillStyle = "#a4a";
-			ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
-		} else if (plots[i].resource == "FIVE") {
-			//ctx.fillStyle = "#aa4";
-			ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");
-		}
-		
-	    //context.fillRect(0, 0, 300, 300);
-		ctx.fill();
-		
-		if (plots[i].die != 0) {
-			const die = plots[i].die;
-			p = getXY(col+colOffset,row);
+			let col = plots[i].col * 2;
+			let row = plots[i].row * 2;
 			
-			// Circle
-			let radius = 25;
+			let colOffset = 0;
+			
+			if (plots[i].row > 0 && plots[i].row%2 == 1) {
+				colOffset = 1;
+			}
+			
 			ctx.beginPath();
-			ctx.arc(p[0], p[1] + (1.0 * separation), radius, 0, Math.PI*2, true); 
-			ctx.closePath();
-			if (die == 7) {
-				ctx.fillStyle = "#000";
+		
+			if (plots[i].resource == "WATER") {
+				ctx.lineWidth = 1;
+			    ctx.strokeStyle = '#000';
 			} else {
-				ctx.globalAlpha = 0.75;
-				ctx.fillStyle = "#777";
+				ctx.lineWidth = 6;
+			    ctx.strokeStyle = '#773';
 			}
-			ctx.fill();
-			ctx.globalAlpha = 1.0;
+		    
+		    let offset1 = 0; //8;
+		    let offset2 = 0; //4;
+		
+			let p = getXY(col+colOffset,row);
+		    ctx.moveTo(p[0], p[1] + offset1);
+		
+			p = getXY(col+1+colOffset,row+1);
+		    ctx.lineTo(p[0] - offset1, p[1] + offset2);
+		
+			p = getXY(col+1+colOffset,row+2);
+		    ctx.lineTo(p[0]- offset1, p[1] - offset2);
+		
+			p = getXY(col+colOffset,row+3);
+		    ctx.lineTo(p[0], p[1] - offset1);
+		
+			p = getXY(col-1+colOffset,row+2);
+		    ctx.lineTo(p[0] + offset1, p[1] - offset2);
+		
+			p = getXY(col-1+colOffset,row+1);
+		    ctx.lineTo(p[0] + offset1, p[1] + offset2);
+		
+			p = getXY(col+colOffset,row);
+		    ctx.lineTo(p[0], p[1] + offset1);
+		   
+			ctx.stroke();
 			
-			// Circle border
-			ctx.lineWidth = 1;
-		    ctx.strokeStyle = '#000';
-		    ctx.stroke();
-
-			// Number
-			ctx.font = "26px Arial";
-			ctx.fillStyle = "#000";
-			let ch = die;
-
-			if (die == 7) {
-				ctx.fillStyle = "#f00";
-				ctx.font = "30px Arial";
-				ch = "R";
-			} else if (die == 6 || die == 8) {
-				ctx.fillStyle = "#b00";
-				ctx.font = "bold 30px Arial";
-			} else if (die == 2 || die == 12) {
-				ctx.font = "16px Arial";
-			} else if (die == 3 || die == 11) {
-				ctx.font = "20px Arial";
+			if (plots[i].resource == "WATER") {
+				ctx.fillStyle = "#116";
+			} else if (plots[i].resource == "ROBBER") {
+				ctx.fillStyle = "#444";
+			} else if (plots[i].resource == "ONE") {
+				//ctx.fillStyle = "#a44";
+				ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
+			} else if (plots[i].resource == "TWO") {
+				//ctx.fillStyle = "#4a4";
+				ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
+			} else if (plots[i].resource == "THREE") {
+				//ctx.fillStyle = "#44a";
+				ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
+			} else if (plots[i].resource == "FOUR") {
+				//ctx.fillStyle = "#a4a";
+				ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
+			} else if (plots[i].resource == "FIVE") {
+				//ctx.fillStyle = "#aa4";
+				ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");
 			}
-			ctx.fillText(ch, p[0] - 10, p[1] + separation + 10);
+			
+		    //context.fillRect(0, 0, 300, 300);
+			ctx.fill();
+			
+			if (plots[i].die != 0) {
+				const die = plots[i].die;
+				p = getXY(col+colOffset,row);
+				
+				// Circle
+				let radius = 25;
+				if (die <= 1) {
+					radius = 30;
+				}
+				ctx.beginPath();
+				ctx.arc(p[0], p[1] + (1.0 * separation), radius, 0, Math.PI*2, true); 
+				ctx.closePath();
+				
+				if (die <= 1) {
+					ctx.fillStyle = "#00b";
+					if (die == -1) ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
+					if (die == -2) ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
+					if (die == -3) ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
+					if (die == -4) ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
+					if (die == -5) ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");
+				} else if (die == 7) {
+					ctx.fillStyle = "#000";
+				} else {
+					//ctx.globalAlpha = 0.75;
+					ctx.fillStyle = "#777";
+				}
+				
+				ctx.fill();
+				//ctx.globalAlpha = 1.0;
+				
+				// Circle border
+				ctx.lineWidth = 1;
+			    ctx.strokeStyle = '#000';
+			    ctx.stroke();
+	
+				// Number
+				ctx.font = "26px Arial";
+				ctx.fillStyle = "#000";
+				let ch = die;
+				let harborOffset = 0;
+				let dieOffset = 0;
+				if (die < 0) {
+					ctx.font = "32px Arial";
+					ch = "2:1";
+					ctx.fillStyle = "#000";
+					harborOffset = 10;
+				} else if (die == 1) {
+					ctx.fillStyle = "#000";
+					ctx.font = "32px Arial";
+					ch = "3:1";
+					harborOffset = 10;
+				} else if (die == 7) {
+					ctx.fillStyle = "#f00";
+					ctx.font = "30px Arial";
+					ch = "R";
+				} else {
+					dieOffset = 5;
+					if (die == 6 || die == 8) {
+						ctx.fillStyle = "#c00";
+						ctx.font = "bold 26px Arial";
+					}
+				}
+				ctx.fillText(ch, p[0] - 10 - harborOffset, p[1] + separation + 10 - dieOffset);
+				let dots = "";
+				let dieOffsetX = 0;
+				let dieOffsetY = 2;
+				if (die == 6 || die == 8) {
+					dots = ".....";
+					dieOffsetX = 14;
+				} else if (die == 5 || die == 9) {
+					dots = "....";
+					dieOffsetX = 11;
+				} else if (die == 4 || die == 10) {
+					dots = "...";
+					dieOffsetX = 8;
+				} else if (die == 3 || die == 11) {
+					dots = "..";
+					dieOffsetX = 5;
+				} else if (die == 2 || die == 12) {
+					dots = ".";
+					dieOffsetX = 0;
+				}
+				ctx.font = "24px Arial";
+				ctx.fillText(dots, p[0] - 4 - dieOffsetX, p[1] + separation + 10 + dieOffsetY);
+			}
 		}
 	}
 }
