@@ -154,15 +154,15 @@ function drawPlots() {
 		} else if (plots[i].resource == "ROBBER") {
 			ctx.fillStyle = "#444";
 		} else if (plots[i].resource == "ONE") {
-			ctx.fillStyle = "#844";
+			ctx.fillStyle = "#a44";
 		} else if (plots[i].resource == "TWO") {
-			ctx.fillStyle = "#484";
+			ctx.fillStyle = "#4a4";
 		} else if (plots[i].resource == "THREE") {
-			ctx.fillStyle = "#448";
+			ctx.fillStyle = "#44a";
 		} else if (plots[i].resource == "FOUR") {
-			ctx.fillStyle = "#848";
+			ctx.fillStyle = "#a4a";
 		} else if (plots[i].resource == "FIVE") {
-			ctx.fillStyle = "#884";
+			ctx.fillStyle = "#aa4";
 		}
 		
 		ctx.fill();
@@ -226,7 +226,7 @@ function drawSpot(col, row) {
 
 function getXY(col, row)
 {
-	let marginX = 100;
+	let marginX = 400;
 	let marginY = 100;
 	
 	let centerX = (col) * x;

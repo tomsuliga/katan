@@ -104,43 +104,50 @@ public class Game {
 		List<Integer> dice = Arrays.asList(2,3,4,5,6,8,9,10,11,12,6,8,5,9,4,10,3,11);
 		Collections.shuffle(dice);
 		
+		List<Resource> resources = Arrays.asList(
+				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
+				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
+				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
+				Resource.ONE, Resource.TWO, Resource.THREE);
+		Collections.shuffle(resources);
+		
 		plots.add(new Plot(2,0,Resource.WATER,0));
 		plots.add(new Plot(3,0,Resource.WATER,0));
 		plots.add(new Plot(4,0,Resource.WATER,0));
 		plots.add(new Plot(5,0,Resource.WATER,0));
 
 		plots.add(new Plot(1,1,Resource.WATER,0));
-		plots.add(new Plot(2,1,Resource.ONE,dice.get(0)));
-		plots.add(new Plot(3,1,Resource.TWO,dice.get(1)));
-		plots.add(new Plot(4,1,Resource.THREE,dice.get(2)));
+		plots.add(new Plot(2,1,resources.get(0),dice.get(0)));
+		plots.add(new Plot(3,1,resources.get(1),dice.get(1)));
+		plots.add(new Plot(4,1,resources.get(2),dice.get(2)));
 		plots.add(new Plot(5,1,Resource.WATER,0));
 
 		plots.add(new Plot(1,2,Resource.WATER,0));
-		plots.add(new Plot(2,2,Resource.FOUR,dice.get(3)));
-		plots.add(new Plot(3,2,Resource.FIVE,dice.get(4)));
-		plots.add(new Plot(4,2,Resource.ONE,dice.get(5)));
-		plots.add(new Plot(5,2,Resource.TWO,dice.get(6)));
+		plots.add(new Plot(2,2,resources.get(3),dice.get(3)));
+		plots.add(new Plot(3,2,resources.get(4),dice.get(4)));
+		plots.add(new Plot(4,2,resources.get(5),dice.get(5)));
+		plots.add(new Plot(5,2,resources.get(6),dice.get(6)));
 		plots.add(new Plot(6,2,Resource.WATER,0));
 
 		plots.add(new Plot(0,3,Resource.WATER,0));
-		plots.add(new Plot(1,3,Resource.THREE,dice.get(7)));
-		plots.add(new Plot(2,3,Resource.FOUR,dice.get(8)));
+		plots.add(new Plot(1,3,resources.get(7),dice.get(7)));
+		plots.add(new Plot(2,3,resources.get(8),dice.get(8)));
 		plots.add(new Plot(3,3,Resource.ROBBER,7));
-		plots.add(new Plot(4,3,Resource.FIVE,dice.get(9)));
-		plots.add(new Plot(5,3,Resource.ONE,dice.get(10)));
+		plots.add(new Plot(4,3,resources.get(9),dice.get(9)));
+		plots.add(new Plot(5,3,resources.get(10),dice.get(10)));
 		plots.add(new Plot(6,3,Resource.WATER,0));
 
 		plots.add(new Plot(1,4,Resource.WATER,0));
-		plots.add(new Plot(2,4,Resource.TWO,dice.get(11)));
-		plots.add(new Plot(3,4,Resource.THREE,dice.get(12)));
-		plots.add(new Plot(4,4,Resource.FOUR,dice.get(13)));
-		plots.add(new Plot(5,4,Resource.FIVE,dice.get(14)));
+		plots.add(new Plot(2,4,resources.get(11),dice.get(11)));
+		plots.add(new Plot(3,4,resources.get(12),dice.get(12)));
+		plots.add(new Plot(4,4,resources.get(13),dice.get(13)));
+		plots.add(new Plot(5,4,resources.get(14),dice.get(14)));
 		plots.add(new Plot(6,4,Resource.WATER,0));
 
 		plots.add(new Plot(1,5,Resource.WATER,0));
-		plots.add(new Plot(2,5,Resource.ONE,dice.get(15)));
-		plots.add(new Plot(3,5,Resource.TWO,dice.get(16)));
-		plots.add(new Plot(4,5,Resource.THREE,dice.get(17)));
+		plots.add(new Plot(2,5,resources.get(15),dice.get(15)));
+		plots.add(new Plot(3,5,resources.get(16),dice.get(16)));
+		plots.add(new Plot(4,5,resources.get(17),dice.get(17)));
 		plots.add(new Plot(5,5,Resource.WATER,0));
 
 		plots.add(new Plot(2,6,Resource.WATER,0));
