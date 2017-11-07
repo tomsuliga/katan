@@ -18,7 +18,52 @@
 -->
 <div id="gameSpace">
 	<div id="leftPane">
-	
+		<div id="buildingCostsTitle">Building Costs</div>
+		<div id="buildingCosts">
+			<div class="bcTitle">Wall</div>
+				<div id="buildCards">
+					<div id="smResource1"></div>
+					<div id="smResource2"></div>
+				</div>
+			<div class="bcTitle">Fort</div>
+				<div id="buildCards">
+					<div id="smResource1"></div>
+					<div id="smResource2"></div>
+					<div id="smResource3"></div>
+					<div id="smResource4"></div>
+				</div>
+			<div class="bcTitle">Castle</div>
+				<div id="buildCards">
+					<div id="smResource3"></div>
+					<div id="smResource3"></div>
+					<div id="smResource5"></div>
+					<div id="smResource5"></div>
+					<div id="smResource5"></div>
+				</div>
+			<div class="bcTitle">Power Card</div>
+				<div id="buildCards">
+					<div id="smResource3"></div>
+					<div id="smResource4"></div>
+					<div id="smResource5"></div>
+				</div>
+		</div>
+		<div id="myLine"></div>
+		<div id="resourceTitle">Your Cards</div>
+		<div id="resourceCards">
+			<div id="resource1"></div>
+			<div id="resource2"></div>
+			<div id="resource3"></div>
+			<div id="resource4"></div>
+			<div id="resource5"></div>
+		</div>
+		<div id="numResourceCards">
+			<div id="numResourceCards1">0</div>
+			<div id="numResourceCards2">0</div>
+			<div id="numResourceCards3">0</div>
+			<div id="numResourceCards4">0</div>
+			<div id="numResourceCards5">0</div>
+		</div>
+		<div id="myLine"></div>
 	</div>
 	
 	<div id="middlePane">
@@ -44,10 +89,12 @@
 		
 		</div>
 		<div id="boardSpace">
-			<canvas id="canvasHex" width="990" height="900" style="background-color: #773;">Your browser does not support the HTML5 canvas tag.</canvas>
+			<canvas id="canvasHex" width="990" height="900">Your browser does not support the HTML5 canvas tag.</canvas>
 		</div>
 		<div id="middleBottom">
 			<button class="myButton btnBlack btn btn-default">Fullscreen</button>
+			<button class="myButton btnBlack btn btn-default">Instructions</button>
+			<button class="myButton btnBlack btn btn-default">Setup</button>
 			<button class="myButton btnBlack btn btn-default">New Game</button>
 			<button class="myButton btnBlack btn btn-default">Step</button>
 			<button class="myButton btnBlack btn btn-default">Pause</button>
@@ -57,7 +104,25 @@
 	</div>
 	
 	<div id="rightPane">
-	
+		<div id="victoryPointsTitle">Victory Points</div>
+		<div id="playerPoints">
+			<div id="playerPointsGroup1">
+				<div id="pp1Amount">0</div>
+				<div id="pp1Name">Tom</div>
+			</div>
+			<div id="playerPointsGroup2">
+				<div id="pp2Amount">0</div>
+				<div id="pp3Name">Atari 800</div>
+			</div>
+			<div id="playerPointsGroup3">
+				<div id="pp3Amount">0</div>
+				<div id="pp3Name">Skynet</div>
+			</div>
+			<div id="playerPointsGroup4">
+				<div id="pp4Amount">0</div>
+				<div id="pp4Name">Hal 9000</div>
+			</div>
+		</div>
 	</div>
 </div>
 

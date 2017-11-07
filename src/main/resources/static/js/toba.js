@@ -241,7 +241,7 @@ function drawPlots() {
 			ctx.stroke();
 			
 			if (plots[i].resource == "WATER") {
-				ctx.fillStyle = "#114";
+				ctx.fillStyle = "#115";
 			} else if (plots[i].resource == "ROBBER") {
 				ctx.fillStyle = "#333";
 			} else if (plots[i].resource == "ONE") {

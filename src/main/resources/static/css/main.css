@@ -3,45 +3,161 @@
 * {
 	margin: 0;
 	padding: 0;
-	background-color: gray;
+	background-color: #662;
 }
 h1 {
 	color: blue;
-	//margin-left: .5em;
 }
+
+body {
+	margin-left: 40px;
+}
+
 div#leftPane {
 	width: 400px;
 	height: 1050px;
 	float: left;
-	background-color: #008;
+	background-color: inherit;
+	color: #222;
+}
+div#buildingCostsTitle {
+	font-size: 28px;
+	font-weight: 600;
+	letter-spacing: 0.25em;
+	color: inherit;
+	width: 400px;
+	height: 40px;
+	padding-top: 5px;
+	text-align: center;
+	background-color: inherit;
+}
+div.bcTitle {
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: 0.25em;
+	color: inherit;
+	width: 400px;
+	height: 30px;
+	padding-top: 5px;
+	//text-align: center;
+	margin-left: 15px;
+	background-color: inherit;
+}
+div#myLine {
+	width: 400px;
+	height: 2px;
+	background-color: #b00;
+}
+div#resourceTitle {
+	font-size: 28px;
+	font-weight: 600;
+	letter-spacing: 0.25em;
+	color: inherit;
+	width: 400px;
+	height: 40px;
+	padding-top: 5px;
+	text-align: center;
+	background-color: inherit;
+}
+div#resourceCards {
+	width: 400px;
+	height: 114px;
+	background-color: inherit;
+}
+div#resource1, div#resource2, div#resource3, div#resource4, div#resource5 {
+	width: 55px;
+	height: 100px;
+	float: left;
+	margin: 12px 12px 0 12px;
+	border-radius: 10px;
+	border: 1px solid #222;
+}
+
+div#buildCards {
+	width: 400px;
+	height: 70px;
+	background-color: inherit;
+}
+div#smResource1, div#smResource2, div#smResource3, div#smResource4, div#smResource5 {
+	width: 55px;
+	height: 50px;
+	float: left;
+	margin: 5px 12px 17px 12px;
+	border-radius: 10px;
+	border: 1px solid #222;
+}
+
+div#resource1, div#smResource1 {
+	background-image: url('/img/blue.png');
+	background-repeat: repeat;
+}
+
+div#resource2, div#smResource2 {
+	background-image: url('/img/red.png');
+	background-repeat: repeat;
+}
+
+div#resource3, div#smResource3 {
+	background-image: url('/img/green.png');
+	background-repeat: repeat;
+}
+
+div#resource4, div#smResource4 {
+	background-image: url('/img/purple.png');
+	background-repeat: repeat;
+}
+
+div#resource5, div#smResource5 {
+	background-image: url('/img/yellow.png');
+	background-repeat: repeat;
+}
+
+div#numResourceCards {
+	width: 400px;
+	height: 50px;
+	background-color: inherit;
+}
+
+div#numResourceCards1, div#numResourceCards2, div#numResourceCards3, div#numResourceCards4, div#numResourceCards5 {
+	font-size: 28px;
+	font-weight: 600;
+	color: #00c;
+	width: 55px;
+	height: 37px;
+	text-align: center;
+	background-color: black;
+	float: left;
+	margin: 5px 12px 5px 12px;
+	border-radius: 8px;
 }
 div#middlePane {
 	width: 1000px;
 	height: 1050px;
 	float: left;
-	background-color: #800;;
+	background-color: inherit;
 }
 div#middleTop {
 	width: 1000px;
 	height: 75px;
-	background-color: #773;;
+	background-color: inherit;
 }
 div#boardSpace {
 	width: 1000px;
 	height: 900px;
-	background-color: #773;
+	background-color: inherit;
 }
 div#middleBottom {
 	width: 1000px;
 	height: 75px;
-	background-color: #773;
+	background-color: inherit;
 	text-align:center;
 }
 div#rightPane {
 	width: 400px;
 	height: 1050px;
 	float: left;
-	background-color: #080;
+	background-color: inherit;
+	color: #222;
 }
 div.clearBoth {
 	clear: both;
@@ -79,16 +195,19 @@ div.ff2 {
 }
 #f1, #f3, #f5, #f7, #f11, #f13, #f15 {
 	color: #b00;
-	background-color: black;
-	}
+	//border: 2px solid #b00;
+	background-color: #000;
+}
 #f2, #f4, #f6, #f8, #f10, #f14, #f16 {
 	color: black;
+	//border: 2px solid #000;
 	background-color: #b00;
 }
 
 #f9, #f12 {
 	color: 0900;
 	background-color: inherit;
+	border: none;
 }
 
 #f1, #f3, #f5, #f7, #f9, #f11, #f13, #f15 {
@@ -98,4 +217,58 @@ div.ff2 {
 #f2, #f4, #f6, #f8, #f10, #f12, #f14, #f16 {
 	transform: rotate(-10deg);
 }
+ 
+div#victoryPointsTitle {
+	font-size: 28px;
+	font-weight: 600;
+	letter-spacing: 0.25em;
+	color: inherit;
+	width: 400px;
+	height: 50px;
+	padding-top: 5px;
+	text-align: center;
+	background-color: inherit;
+}
+ 
+div#playerPointsGroup1, div#playerPointsGroup2, div#playerPointsGroup3, div#playerPointsGroup4 {
+	width: 190px;
+	float: left;
+	height: 125px;
+	//border: 2px solid #900;
+	margin: 5px;
+	box-sizing: border-box;
+} 
+ 
+div#pp1Amount, div#pp2Amount, div#pp3Amount, div#pp4Amount {
+	width: 120px;
+	height: 75px;
+	background-color: black;
+	font-size: 50px;
+	text-align: center;
+	margin: 0 40px 0 40px;
+	border-radius: 20px;
+} 
+div#pp1Amount {
+	color: #00c;
+}
+div#pp2Amount {
+	color: #c00;
+}
+div#pp3Amount {
+	color: #0c0;
+}
+div#pp4Amount {
+	color: #cc0;
+}
+
+div#pp1Name, div#pp2Name, div#pp3Name, div#pp4Name {
+	width: 186px;
+	height: 45px;
+	background-color: inherit;
+	color: inherit;
+	font-size: 28px;
+	text-align: center;
+}
+ 
+ 
  
