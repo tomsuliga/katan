@@ -210,8 +210,8 @@ function drawPlots() {
 				ctx.lineWidth = 1;
 			    ctx.strokeStyle = '#000';
 			} else {
-				ctx.lineWidth = 6;
-			    ctx.strokeStyle = '#773';
+				ctx.lineWidth = 3;
+			    ctx.strokeStyle = '#000';
 			}
 		    
 		    let offset1 = 0; //8;
@@ -241,9 +241,9 @@ function drawPlots() {
 			ctx.stroke();
 			
 			if (plots[i].resource == "WATER") {
-				ctx.fillStyle = "#116";
+				ctx.fillStyle = "#114";
 			} else if (plots[i].resource == "ROBBER") {
-				ctx.fillStyle = "#444";
+				ctx.fillStyle = "#333";
 			} else if (plots[i].resource == "ONE") {
 				//ctx.fillStyle = "#a44";
 				ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
@@ -271,9 +271,9 @@ function drawPlots() {
 				// Harbor to Plot road
 				if (die <= 1) {
 					ctx.beginPath();
-					ctx.lineWidth = 8;
+					ctx.lineWidth = 6;
 				    ctx.strokeStyle = '#22a';
-				    ctx.setLineDash([2,4]);
+				    ctx.setLineDash([3,6]);
 				    let p2;
 					if (plots[i].col == 2 && plots[i].row == 0) {
 					    ctx.moveTo(p[0], p[1] + separation);
@@ -437,8 +437,8 @@ function drawSpot(col, row) {
 
 function getXY(col, row)
 {
-	let marginX = 400;
-	let marginY = 100;
+	let marginX = 10;
+	let marginY = 10;
 	
 	let centerX = (col) * x;
 	let centerY = row * separation;

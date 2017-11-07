@@ -207,6 +207,7 @@ public class Game {
 		plots.add(new Plot(5,6,Resource.WATER,0));
 		
 		// temp
+	
 		adjMap.get(66).setImprovement(Improvement.TOWN);
 		adjMap.get(66).setOwner(Owner.P1);
 		roads.add(new Road(Owner.P1, adjMap.get(66), adjMap.get(51)));	
@@ -235,6 +236,7 @@ public class Game {
 		adjMap.get(144).setImprovement(Improvement.CITY);
 		adjMap.get(144).setOwner(Owner.P4);
 		roads.add(new Road(Owner.P4, adjMap.get(144), adjMap.get(130)));
+	
 }
 	
 	private void buildHexEdges(int id) {

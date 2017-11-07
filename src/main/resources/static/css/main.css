@@ -3,82 +3,99 @@
 * {
 	margin: 0;
 	padding: 0;
+	background-color: gray;
 }
-
 h1 {
 	color: blue;
 	//margin-left: .5em;
 }
-
-div#gameSpace {
-	width: 1920px;
-	height: 1080px;
-	background-color: #774;
-	//margin-left: 1em;
-}
-
-div.topLeft, div.topRight, div.bottomLeft, div.bottomRight {
-	width: 55px;
-	height: 10px;
-}
-
-div.middleVert {
-	width: 10px;
-	height: 50px;
+div#leftPane {
+	width: 400px;
+	height: 1050px;
 	float: left;
-	//margin-top: 15px;
+	background-color: #008;
 }
-
-div.topLeft, div.topRight, div.middleVert, div.bottomLeft, div.bottomRight {
-	background-color: #aaa;
-}
-
-div.topLeft {
+div#middlePane {
+	width: 1000px;
+	height: 1050px;
 	float: left;
-	transform: rotate(-30deg);
+	background-color: #800;;
 }
-
-div.topRight {
+div#middleTop {
+	width: 1000px;
+	height: 75px;
+	background-color: #773;;
+}
+div#boardSpace {
+	width: 1000px;
+	height: 900px;
+	background-color: #773;
+}
+div#middleBottom {
+	width: 1000px;
+	height: 75px;
+	background-color: #773;
+	text-align:center;
+}
+div#rightPane {
+	width: 400px;
+	height: 1050px;
 	float: left;
-	transform: rotate(30deg);
+	background-color: #080;
 }
-
-div.bottomLeft {
-	float: left;
-	transform: rotate(30deg);
-}
-
-div.bottomRight {
-	float: left;
-	transform: rotate(-30deg);
-}
-
 div.clearBoth {
 	clear: both;
 }
-
-div.middleResource {
-	width: 100px;
-	height: 100px;
+button.myButton {
+	margin: 15px 10px 10px 10px;
+	font-size: large;
+}
+button.btnRed {
+	color: black;
+	background-color: #a00;	
+}
+button.btnBlack {
+	color: red;
+	background-color: black;	
+}
+div.ff1 {
 	float: left;
-	background-color: blue;
-	border-radius: 50px;
-	//margin-left: 5px;
-	//margin-right: 5px;
+	text-align: center;
+	margin-left: 5%;
+	width: 90%;
+	background-color: inherit;
+	margin-top: 2%;
+	opacity: 0.75;
 }
 
-div.halfSpace {
-	width: 50px;
-	height: 1px;
+div.ff2 {
 	float: left;
+	margin-left: 2%;
+}
+#f1, #f2, #f3, #f4, #f5, #f6, #f7, #f8, #f9, #f10, #f11, #f12, #f13, #f14, #f15, #f16 {
+	font-size: calc(1vw + 1vh);
+	width: 4%;
+	border-radius: 8px;
+}
+#f1, #f3, #f5, #f7, #f11, #f13, #f15 {
+	color: #b00;
+	background-color: black;
+	}
+#f2, #f4, #f6, #f8, #f10, #f14, #f16 {
+	color: black;
+	background-color: #b00;
 }
 
-div.singleHex {
-	//padding-top: 20px;
-	//padding-left: 0px;
-	width: 130px;
-	height: 110px;
-	float: left;
+#f9, #f12 {
+	color: 0900;
+	background-color: inherit;
 }
 
+#f1, #f3, #f5, #f7, #f9, #f11, #f13, #f15 {
+	transform: rotate(10deg);
+} 
 
+#f2, #f4, #f6, #f8, #f10, #f12, #f14, #f16 {
+	transform: rotate(-10deg);
+}
+ 
