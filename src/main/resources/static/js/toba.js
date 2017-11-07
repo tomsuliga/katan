@@ -1,6 +1,4 @@
-/**
- * 
- */
+'use strict';
 
 var c;
 var ctx;
@@ -46,7 +44,7 @@ function drawRoads() {
 	for (let i=0;i<roads.length;i++) {
 		let r = roads[i];
 		console.log("r=" + r.owner + "," + r.fromVertex.col + "," + r.fromVertex.row + "," + r.toVertex.col + "," + r.toVertex.row);
-		lineIt(r.owner, r.fromVertex.col, r.fromVertex.row, r.toVertex.col, r.toVertex.row);
+		drawLine(r.owner, r.fromVertex.col, r.fromVertex.row, r.toVertex.col, r.toVertex.row);
 	}
 }
 
@@ -73,7 +71,7 @@ function drawLines() {
 						let col2 = id2 % 15;
 						let row2 = parseInt(id2 / 15, 10);
 						//console.log(col2 + "," + row2);
-						lineIt("NONE",col,row,col2,row2);
+						drawLine("NONE",col,row,col2,row2);
 					}
 				}
 			}
@@ -147,7 +145,7 @@ function getOwnerColor(owner) {
 	return color;
 }
 
-function lineIt(owner, col, row, col2, row2) {
+function drawLine(owner, col, row, col2, row2) {
 	let fromPoint = getXY(col,row);
 	let toPoint = getXY(col2,row2);	
 	ctx.beginPath();
@@ -160,8 +158,25 @@ function lineIt(owner, col, row, col2, row2) {
 	}
     ctx.moveTo(fromPoint[0], fromPoint[1]);
 	ctx.lineTo(toPoint[0], toPoint[1]);
-	console.log("lineIt: " + separation + "," + x + ", " + fromPoint[0] + "," + fromPoint[1] + "," + toPoint[0] + "," + toPoint[1]);
 	ctx.stroke();
+	//console.log("lineIt: " + separation + "," + x + ", " + fromPoint[0] + "," + fromPoint[1] + "," + toPoint[0] + "," + toPoint[1]);
+}
+
+function drawLineHarbor(owner, col, row, col2, row2) {
+	let fromPoint = getXY(col,row);
+	let toPoint = getXY(col2,row2);	
+	ctx.beginPath();
+	if (owner == "NONE") {
+		ctx.lineWidth = 2;
+	    ctx.strokeStyle = '#000';
+	} else {
+		ctx.lineWidth = 12;
+	    ctx.strokeStyle = getOwnerColor(owner);
+	}
+    ctx.moveTo(fromPoint[0], fromPoint[1]);
+	ctx.lineTo(toPoint[0], toPoint[1]);
+	ctx.stroke();
+	//console.log("lineIt: " + separation + "," + x + ", " + fromPoint[0] + "," + fromPoint[1] + "," + toPoint[0] + "," + toPoint[1]);
 }
 
 function drawPlots() {
@@ -253,6 +268,74 @@ function drawPlots() {
 				const die = plots[i].die;
 				p = getXY(col+colOffset,row);
 				
+				// Harbor to Plot road
+				if (die <= 1) {
+					ctx.beginPath();
+					ctx.lineWidth = 8;
+				    ctx.strokeStyle = '#22a';
+				    ctx.setLineDash([2,4]);
+				    let p2;
+					if (plots[i].col == 2 && plots[i].row == 0) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 1, plots[i].row + 2);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset, row + 3);
+					} else if (plots[i].col == 4 && plots[i].row == 0) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset - 1, plots[i].row + 2);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset, plots[i].row + 3);
+					} else if (plots[i].col == 5 && plots[i].row == 1) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 0, plots[i].row + 4);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset - 1, plots[i].row + 3);
+					} else if (plots[i].col == 1 && plots[i].row == 2) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 1, plots[i].row + 3);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 1, plots[i].row + 4);
+					} else if (plots[i].col == 6 && plots[i].row == 3) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset - 1, plots[i].row + 4);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset - 1, plots[i].row + 5);
+					} else if (plots[i].col == 1 && plots[i].row == 4) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 1, plots[i].row + 5);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 1, plots[i].row + 6);
+					} else if (plots[i].col == 2 && plots[i].row == 6) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 0, plots[i].row + 6);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 1, plots[i].row + 7);
+					} else if (plots[i].col == 4 && plots[i].row == 6) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset - 1, plots[i].row + 7);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 0, plots[i].row + 6);
+					} else if (plots[i].col == 5 && plots[i].row == 5) {
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset - 1, plots[i].row + 6);
+						ctx.lineTo(p2[0], p2[1]);
+					    ctx.moveTo(p[0], p[1] + separation);
+					    p2 = getXY(col + colOffset + 0, plots[i].row + 5);
+					}			
+					ctx.lineTo(p2[0], p2[1]);
+					ctx.stroke();
+					ctx.closePath();
+				    ctx.setLineDash([0]);
+				}
+
 				// Circle
 				let radius = 25;
 				if (die <= 1) {
@@ -268,7 +351,7 @@ function drawPlots() {
 					if (die == -2) ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
 					if (die == -3) ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
 					if (die == -4) ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
-					if (die == -5) ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");
+					if (die == -5) ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");					
 				} else if (die == 7) {
 					ctx.fillStyle = "#000";
 				} else {
@@ -288,18 +371,18 @@ function drawPlots() {
 				ctx.font = "26px Arial";
 				ctx.fillStyle = "#000";
 				let ch = die;
-				let harborOffset = 0;
+				let offsetX = 0;
 				let dieOffset = 0;
 				if (die < 0) {
 					ctx.font = "32px Arial";
 					ch = "2:1";
 					ctx.fillStyle = "#000";
-					harborOffset = 10;
+					offsetX = 10;
 				} else if (die == 1) {
 					ctx.fillStyle = "#000";
 					ctx.font = "32px Arial";
 					ch = "3:1";
-					harborOffset = 10;
+					offsetX = 10;
 				} else if (die == 7) {
 					ctx.fillStyle = "#f00";
 					ctx.font = "30px Arial";
@@ -307,11 +390,13 @@ function drawPlots() {
 				} else {
 					dieOffset = 5;
 					if (die == 6 || die == 8) {
-						ctx.fillStyle = "#c00";
+						ctx.fillStyle = "#900";
 						ctx.font = "bold 26px Arial";
+					} else if (die >= 10) {
+						offsetX = 5;
 					}
 				}
-				ctx.fillText(ch, p[0] - 10 - harborOffset, p[1] + separation + 10 - dieOffset);
+				ctx.fillText(ch, p[0] - 10 - offsetX, p[1] + separation + 10 - dieOffset);
 				let dots = "";
 				let dieOffsetX = 0;
 				let dieOffsetY = 2;

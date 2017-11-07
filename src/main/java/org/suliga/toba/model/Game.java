@@ -213,6 +213,7 @@ public class Game {
 		adjMap.get(68).setImprovement(Improvement.CITY);
 		adjMap.get(68).setOwner(Owner.P1);
 		roads.add(new Road(Owner.P1, adjMap.get(68), adjMap.get(84)));
+		roads.add(new Road(Owner.P1, adjMap.get(84), adjMap.get(70)));
 
 		adjMap.get(109).setImprovement(Improvement.TOWN);
 		adjMap.get(109).setOwner(Owner.P2);
