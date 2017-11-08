@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="ISO-8859-1">
-	<title>Monsters of Toba</title>
+	<title>Settlers of Toba</title>
 	<meta name="viewport" content="width=device-width,initial-scale=1">
 	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" rel="stylesheet" >
 	<link href="css/main.css" type="text/css" rel="stylesheet">
@@ -25,7 +25,7 @@
 					<div id="smResource1"></div>
 					<div id="smResource2"></div>
 				</div>
-			<div class="bcTitle">Hut</div>
+			<div class="bcTitle">Fort</div>
 				<div id="buildCards">
 					<div id="smResource1"></div>
 					<div id="smResource2"></div>
@@ -48,16 +48,39 @@
 				</div>
 		</div>
 		<div id="myLine"></div>
+		<div id="resourceTitle">Allowed Actions</div>
+		<div class="dualPane">
+			<div class="halfPane">
+				<button class="myButton btnGray btn btn-primary">Fullscreen</button>
+				<button class="myButton btnGray btn btn-primary">Instructions</button>
+				<button class="myButton btnGray btn btn-primary">Setup</button>
+				<button class="myButton btnGray btn btn-primary">New Game</button>
+				<button class="myButton btnGray btn btn-primary">Step</button><br>
+				<button class="myButton btnGray btn btn-primary">Pause</button><br>
+				<button class="myButton btnGray btn btn-primary">Save</button><br>
+				<button class="myButton btnGray btn btn-primary">Load</button>	
+			</div>
+			<div class="halfPane">
+				<button class="myButtonLg btnBlack btn btn-danger">Roll Dice</button>
+				<button class="myButton btnBlack btn btn-danger ">Build Road</button>
+				<button class="myButton btnBlack btn btn-danger ">Build Hut</button>
+				<button class="myButton btnBlack btn btn-danger ">Build Castle</button>
+				<button class="myButton btnBlack btn btn-danger ">Build Power</button>
+				<button class="myButton btnBlack btn btn-danger ">Trade</button>
+				<button class="myButton btnBlack btn btn-danger ">Use Power</button>
+				<button class="myButtonLg btnBlack btn btn-danger">End Turn</button>
+			</div>
+		</div>
 	</div>
 	
 	<div id="middlePane">
 		<div id="middleTop">
 			<div class="ff1">
-				<div class="ff2" id="f1">M</div>
-				<div class="ff2" id="f2">O</div>
-				<div class="ff2" id="f3">N</div>
-				<div class="ff2" id="f4">S</div>
-				<div class="ff2" id="f5">T</div>
+				<div class="ff2" id="f1">S</div>
+				<div class="ff2" id="f2">E</div>
+				<div class="ff2" id="f3">T</div>
+				<div class="ff2" id="f4">T</div>
+				<div class="ff2" id="f5">L</div>
 				<div class="ff2" id="f6">E</div>
 				<div class="ff2" id="f7">R</div>
 				<div class="ff2" id="f8">S</div>
@@ -76,14 +99,7 @@
 			<canvas id="canvasHex" width="990" height="900">Your browser does not support the HTML5 canvas tag.</canvas>
 		</div>
 		<div id="middleBottom">
-			<button class="myButton btnBlack btn btn-default">Fullscreen</button>
-			<button class="myButton btnBlack btn btn-default">Instructions</button>
-			<button class="myButton btnBlack btn btn-default">Setup</button>
-			<button class="myButton btnBlack btn btn-default">New Game</button>
-			<button class="myButton btnBlack btn btn-default">Step</button>
-			<button class="myButton btnBlack btn btn-default">Pause</button>
-			<button class="myButton btnBlack btn btn-default">Save</button>
-			<button class="myButton btnBlack btn btn-default">Load</button>
+			<div id="currentTurnTitle">Current Turn: Tom</div>
 		</div>
 	</div>
 	
@@ -117,7 +133,7 @@
 			<div id="numLongestRoad4">0</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Number of Huts</div>
+		<div id="resourceTitle">Number of Forts</div>
 		<div id="numLongestRoad">
 			<div id="numLongestRoad1">0</div>
 			<div id="numLongestRoad2">0</div>
@@ -157,9 +173,24 @@
 			<div id="numResourceCards5">0</div>
 		</div>
 		<div id="myLine"></div>
+		<div id="resourceTitle">Power Cards</div>
+		<div id="resourceCards">
+			<div id="power1" class="cardLetter">Mo</div>
+			<div id="power2" class="cardLetter">Kn</div>
+			<div id="power3" class="cardLetter">V.P.</div>
+			<div id="power4" class="cardLetter">Rs</div>
+			<div id="power5" class="cardLetter">Rd</div>
+		</div>
+		<div id="numResourceCards">
+			<div id="numResourceCards1">0</div>
+			<div id="numResourceCards2">0</div>
+			<div id="numResourceCards3">0</div>
+			<div id="numResourceCards4">0</div>
+			<div id="numResourceCards5">0</div>
+		</div>
+		<div id="myLine"></div>
 	</div>
 </div>
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js"></script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

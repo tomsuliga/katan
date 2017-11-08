@@ -10,16 +10,16 @@ let separation = 80;
 let x = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
 
 var imgGreen = new Image();
-imgGreen.src = "img/green.png";
+imgGreen.src = "img/rubies.jpg";
 var imgRed = new Image();
-imgRed.src = "img/red.png";
+imgRed.src = "img/grass.jpg";
 var imgBlue = new Image();
-imgBlue.src = "img/blue.png";
+imgBlue.src = "img/wheat.jpg";
 //imgGreen.onload = init;
 var imgPurple = new Image();
-imgPurple.src = "img/purple.png";
+imgPurple.src = "img/cash.jpg";
 var imgYellow = new Image();
-imgYellow.src = "img/yellow.png";
+imgYellow.src = "img/lava.jpg";
 
 function init() {
 	var payload = JSON.stringify( { 'a':'b' } );
@@ -262,7 +262,11 @@ function drawPlots() {
 			}
 			
 		    //context.fillRect(0, 0, 300, 300);
+			if (plots[i].resource != "WATER" && plots[i].resource != "ROBBER") {
+				ctx.globalAlpha = 0.65;
+			}
 			ctx.fill();
+			ctx.globalAlpha = 1.0;
 			
 			if (plots[i].die != 0) {
 				const die = plots[i].die;
