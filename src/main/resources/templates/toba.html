@@ -16,7 +16,7 @@
 				<br>				
 			</block>			
 -->
-<div id="gameSpace">
+<div id="gameSpace" th:attr="data-sessionId=${sessionId}">
 	<div id="leftPane">
 		<div id="buildingCostsTitle">Building Costs</div>
 		<div id="buildingCosts">
@@ -55,7 +55,7 @@
 				<button class="myButton btnGray btn btn-primary">Instructions</button>
 				<button class="myButton btnGray btn btn-primary">Setup</button>
 				<button class="myButton btnGray btn btn-primary">New Game</button>
-				<button class="myButton btnGray btn btn-primary">Step</button><br>
+				<button class="myButton btnGray btn btn-primary" id="btnStep">Step</button><br>
 				<button class="myButton btnGray btn btn-primary">Pause</button><br>
 				<button class="myButton btnGray btn btn-primary">Save</button><br>
 				<button class="myButton btnGray btn btn-primary">Load</button>	
@@ -63,7 +63,7 @@
 			<div class="halfPane">
 				<button class="myButtonLg btnBlack btn btn-danger">Roll Dice</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Road</button>
-				<button class="myButton btnBlack btn btn-danger ">Build Hut</button>
+				<button class="myButton btnBlack btn btn-danger ">Build Fort</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Castle</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Power</button>
 				<button class="myButton btnBlack btn btn-danger ">Trade</button>

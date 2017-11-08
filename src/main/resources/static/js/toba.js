@@ -42,10 +42,14 @@ function drawBoard() {
 
 function drawRoads() {
 	for (let i=0;i<roads.length;i++) {
-		let r = roads[i];
-		console.log("r=" + r.owner + "," + r.fromVertex.col + "," + r.fromVertex.row + "," + r.toVertex.col + "," + r.toVertex.row);
-		drawLine(r.owner, r.fromVertex.col, r.fromVertex.row, r.toVertex.col, r.toVertex.row);
+		let road = roads[i];
+		drawRoad(road);
 	}
+}
+
+function drawRoad(road) {
+	console.log("road=" + road.owner + "," + road.fromVertex.col + "," + road.fromVertex.row + "," + road.toVertex.col + "," + road.toVertex.row);
+	drawLine(road.owner, road.fromVertex.col, road.fromVertex.row, road.toVertex.col, road.toVertex.row);
 }
 
 function drawSpots() {
@@ -115,7 +119,7 @@ function drawImprovement(col,row,improvement,owner) {
 	if (improvement == "TOWN" || improvement == "CITY") {
 		let xy = getXY(col,row);
 		// Circle
-		let radius = 15;
+		let radius = 16;
 		ctx.beginPath();
 		ctx.arc(xy[0], xy[1], radius, 0, Math.PI*2, true); 
 		ctx.closePath();
@@ -153,6 +157,12 @@ function drawLine(owner, col, row, col2, row2) {
 		ctx.lineWidth = 2;
 	    ctx.strokeStyle = '#000';
 	} else {
+		ctx.lineWidth = 16;
+		ctx.strokeStyle = "#000";
+	    ctx.moveTo(fromPoint[0], fromPoint[1]);
+		ctx.lineTo(toPoint[0], toPoint[1]);
+		ctx.stroke();
+
 		ctx.lineWidth = 12;
 	    ctx.strokeStyle = getOwnerColor(owner);
 	}
@@ -263,7 +273,7 @@ function drawPlots() {
 			
 		    //context.fillRect(0, 0, 300, 300);
 			if (plots[i].resource != "WATER" && plots[i].resource != "ROBBER") {
-				ctx.globalAlpha = 0.65;
+				ctx.globalAlpha = 0.60;
 			}
 			ctx.fill();
 			ctx.globalAlpha = 1.0;
@@ -505,12 +515,35 @@ stomp.connect({}, function(frame) {
     	vertices = game.vertices;
     	plots = game.plots;
     	roads = game.roads;
+    	console.log("roads=" + roads)
        	drawBoard();
    });
+
+    stomp.subscribe('/topic/result/doNextStep', function (message) {
+    	let tm = JSON.parse(message.body);
+    	if (tm.road1 != null) {
+    		drawRoad(tm.road1);
+    	}
+    	if (tm.vertex1 != null) {
+    		let v = tm.vertex1;
+    		drawImprovement(v.col, v.row, v.improvement, v.owner);
+    	}
+    	if (tm.die1 != 0 && tm.die2 != 0) {
+    		console.log("Dice=" + tm.die1 + ":" + tm.die2);
+    	}
+   });
     
-	var payload = JSON.stringify( { 'a':'b' } );
+	let sessionId = $('div#gameSpace').attr("data-sessionId");
+	var payload = JSON.stringify( { 'sessionId':sessionId } );
 	stomp.send('/stomp/toba/getGame', {}, payload);
 });
+
+$(document).on('click', '#btnStep', function() {
+	let sessionId = $('div#gameSpace').attr("data-sessionId");
+	var payload = JSON.stringify( { 'sessionId':sessionId } );
+	stomp.send('/stomp/toba/getNextStep', {}, payload);
+});
+
 
 
 

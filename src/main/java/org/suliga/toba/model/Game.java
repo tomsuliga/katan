@@ -11,6 +11,8 @@ public class Game {
 	public static final int NUM_COLS = 15;
 	public static final int NUM_ROWS = 16;
 	
+	private String sessionId;
+	
 	private Vertex[][] vertices;
 	
 	private Map<Integer, Vertex> adjMap;
@@ -19,7 +21,12 @@ public class Game {
 	
 	private List<Road> roads;
 	
-	public Game() {
+	private int numTurns;
+	
+	public Game() {}
+	
+	public Game(String sessionId) {
+		this.sessionId = sessionId;
 		init();
 	}
 	
@@ -30,6 +37,7 @@ public class Game {
 		roads = new ArrayList<>();
 		int id = 0;
 		Vertex v = null;
+		numTurns = 0;
 		
 		String layout[] = {
 				"....x.x.x.x....", // 0 - 14
@@ -204,39 +212,7 @@ public class Game {
 		plots.add(new Plot(2,6,Resource.WATER,1));
 		plots.add(new Plot(3,6,Resource.WATER,0));
 		plots.add(new Plot(4,6,Resource.WATER,-5));
-		plots.add(new Plot(5,6,Resource.WATER,0));
-		
-		// temp
-	
-		adjMap.get(66).setImprovement(Improvement.TOWN);
-		adjMap.get(66).setOwner(Owner.P1);
-		roads.add(new Road(Owner.P1, adjMap.get(66), adjMap.get(51)));	
-		adjMap.get(68).setImprovement(Improvement.CITY);
-		adjMap.get(68).setOwner(Owner.P1);
-		roads.add(new Road(Owner.P1, adjMap.get(68), adjMap.get(84)));
-		roads.add(new Road(Owner.P1, adjMap.get(84), adjMap.get(70)));
-
-		adjMap.get(109).setImprovement(Improvement.TOWN);
-		adjMap.get(109).setOwner(Owner.P2);
-		roads.add(new Road(Owner.P2, adjMap.get(109), adjMap.get(124)));
-		adjMap.get(111).setImprovement(Improvement.CITY);
-		adjMap.get(111).setOwner(Owner.P2);
-		roads.add(new Road(Owner.P2, adjMap.get(111), adjMap.get(95)));
-
-		adjMap.get(157).setImprovement(Improvement.TOWN);
-		adjMap.get(157).setOwner(Owner.P3);
-		roads.add(new Road(Owner.P3, adjMap.get(157), adjMap.get(171)));
-		adjMap.get(155).setImprovement(Improvement.CITY);
-		adjMap.get(155).setOwner(Owner.P3);
-		roads.add(new Road(Owner.P3, adjMap.get(155), adjMap.get(171)));
-
-		adjMap.get(99).setImprovement(Improvement.TOWN);
-		adjMap.get(99).setOwner(Owner.P4);
-		roads.add(new Road(Owner.P4, adjMap.get(99), adjMap.get(84)));
-		adjMap.get(144).setImprovement(Improvement.CITY);
-		adjMap.get(144).setOwner(Owner.P4);
-		roads.add(new Road(Owner.P4, adjMap.get(144), adjMap.get(130)));
-	
+		plots.add(new Plot(5,6,Resource.WATER,0));		
 }
 	
 	private void buildHexEdges(int id) {
@@ -273,6 +249,30 @@ public class Game {
 
 	public List<Road> getRoads() {
 		return roads;
+	}
+	
+	public void addRoad(Road road) {
+		roads.add(road);
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+	public int getNumTurns() {
+		return numTurns;
+	}
+
+	public void setNumTurns(int numTurns) {
+		this.numTurns = numTurns;
+	}
+	
+	public void endTurn() {
+		numTurns++;
 	}
 }
 
