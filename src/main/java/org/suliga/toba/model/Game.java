@@ -23,6 +23,12 @@ public class Game {
 	
 	private int numTurns;
 	
+	private int[] numForts;
+	
+	private int[] numVictoryPoints;
+
+	private TobaMessage tobaMessage;
+	
 	public Game() {}
 	
 	public Game(String sessionId) {
@@ -35,6 +41,8 @@ public class Game {
 		adjMap  = new HashMap<>();
 		plots = new ArrayList<>();
 		roads = new ArrayList<>();
+		numForts = new int[4];
+		numVictoryPoints = new int[4];
 		int id = 0;
 		Vertex v = null;
 		numTurns = 0;
@@ -274,7 +282,44 @@ public class Game {
 	public void endTurn() {
 		numTurns++;
 	}
+
+	public TobaMessage getTobaMessage() {
+		return tobaMessage;
+	}
+
+	public void setTobaMessage(TobaMessage tobaMessage) {
+		this.tobaMessage = tobaMessage;
+	}
+
+	public int[] getNumForts() {
+		return numForts;
+	}
+
+	public void setNumForts(int[] numForts) {
+		this.numForts = numForts;
+	}
+	
+	public void addNumForts(int index) {
+		numForts[index]++;
+		addNumVictoryPoints(index);
+	}
+
+	public int[] getNumVictoryPoints() {
+		return numVictoryPoints;
+	}
+
+	public void setNumVictoryPoints(int[] numVictoryPoints) {
+		this.numVictoryPoints = numVictoryPoints;
+	}
+	
+	public void addNumVictoryPoints(int index) {
+		this.numVictoryPoints[index]++;
+	}
 }
+
+
+
+
 
 
 

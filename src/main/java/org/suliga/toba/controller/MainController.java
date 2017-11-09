@@ -69,6 +69,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P1);
 			tm.setVertex1(vertex1);
+			game.addNumForts(0);
 			game.endTurn();
 		} else if (game.getNumTurns() == 1) {
 			Road road = new Road(Owner.P2, game.getAdjMap().get(109), game.getAdjMap().get(124));
@@ -78,6 +79,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P2);
 			tm.setVertex1(vertex1);
+			game.addNumForts(1);
 			game.endTurn();
 		} else if (game.getNumTurns() == 2) {
 			Road road = new Road(Owner.P3, game.getAdjMap().get(157), game.getAdjMap().get(171));
@@ -87,6 +89,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P3);
 			tm.setVertex1(vertex1);
+			game.addNumForts(2);
 			game.endTurn();
 		} else if (game.getNumTurns() == 3) {
 			Road road = new Road(Owner.P4, game.getAdjMap().get(99), game.getAdjMap().get(84));
@@ -96,6 +99,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P4);
 			tm.setVertex1(vertex1);
+			game.addNumForts(3);
 			game.endTurn();
 		} else if (game.getNumTurns() == 4) {
 			Road road = new Road(Owner.P4, game.getAdjMap().get(144), game.getAdjMap().get(130));
@@ -105,6 +109,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P4);
 			tm.setVertex1(vertex1);
+			game.addNumForts(3);
 			game.endTurn();
 		} else if (game.getNumTurns() == 5) {
 			Road road = new Road(Owner.P3, game.getAdjMap().get(155), game.getAdjMap().get(171));
@@ -114,6 +119,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P3);
 			tm.setVertex1(vertex1);
+			game.addNumForts(2);
 			game.endTurn();
 		} else if (game.getNumTurns() == 6) {
 			Road road = new Road(Owner.P2, game.getAdjMap().get(111), game.getAdjMap().get(95));
@@ -123,6 +129,7 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P2);
 			tm.setVertex1(vertex1);
+			game.addNumForts(1);
 			game.endTurn();
 		} else if (game.getNumTurns() == 7) {
 			Road road = new Road(Owner.P1, game.getAdjMap().get(68), game.getAdjMap().get(84));
@@ -132,12 +139,13 @@ public class MainController {
 			vertex1.setImprovement(Improvement.TOWN);
 			vertex1.setOwner(Owner.P1);
 			tm.setVertex1(vertex1);
+			game.addNumForts(0);
 			game.endTurn();
 		} else if (game.getNumTurns() == 8) {
 			tm.rollDice();
 		}
 		
-		tm.setNumTurns(game.getNumTurns());
-		simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", tm);
+		game.setTobaMessage(tm);
+		simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
 	}
 }

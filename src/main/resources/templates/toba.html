@@ -48,9 +48,9 @@
 				</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Allowed Actions</div>
-		<div class="dualPane">
-			<div class="halfPane">
+		<div id="allowedActionsTitle">Allowed Actions</div>
+		<div id="fullPaneAllowedActions">
+			<div class="halfPaneAllowedActions">
 				<button class="myButton btnGray btn btn-primary">Fullscreen</button>
 				<button class="myButton btnGray btn btn-primary">Instructions</button>
 				<button class="myButton btnGray btn btn-primary">Setup</button>
@@ -60,7 +60,7 @@
 				<button class="myButton btnGray btn btn-primary">Save</button><br>
 				<button class="myButton btnGray btn btn-primary">Load</button>	
 			</div>
-			<div class="halfPane">
+			<div class="halfPaneAllowedActions">
 				<button class="myButtonLg btnBlack btn btn-danger">Roll Dice</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Road</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Fort</button>
@@ -107,19 +107,19 @@
 		<div id="victoryPointsTitle">Victory Points</div>
 		<div id="playerPoints">
 			<div id="playerPointsGroup1">
-				<div id="pp1Amount">0</div>
+				<div id="numVictoryPoints1">0</div>
 				<div id="pp1Name">Tom</div>
 			</div>
 			<div id="playerPointsGroup2">
-				<div id="pp2Amount">0</div>
+				<div id="numVictoryPoints2">0</div>
 				<div id="pp3Name">Atari 800</div>
 			</div>
 			<div id="playerPointsGroup3">
-				<div id="pp3Amount">0</div>
+				<div id="numVictoryPoints3">0</div>
 				<div id="pp3Name">Skynet</div>
 			</div>
 			<div id="playerPointsGroup4">
-				<div id="pp4Amount">0</div>
+				<div id="numVictoryPoints4">0</div>
 				<div id="pp4Name">Hal 9000</div>
 			</div>
 		</div>
@@ -134,11 +134,11 @@
 		</div>
 		<div id="myLine"></div>
 		<div id="resourceTitle">Number of Forts</div>
-		<div id="numLongestRoad">
-			<div id="numLongestRoad1">0</div>
-			<div id="numLongestRoad2">0</div>
-			<div id="numLongestRoad3">0</div>
-			<div id="numLongestRoad4">0</div>
+		<div id="numForts">
+			<div id="numForts1">0</div>
+			<div id="numForts2">0</div>
+			<div id="numForts3">0</div>
+			<div id="numForts4">0</div>
 		</div>
 		<div id="myLine"></div>
 		<div id="resourceTitle">Number of Castles</div>
@@ -189,6 +189,7 @@
 			<div id="numResourceCards5">0</div>
 		</div>
 		<div id="myLine"></div>
+		<button class="myButtonLong">Debug Game</button>
 	</div>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>

@@ -16,21 +16,28 @@ body {
 div#leftPane {
 	width: 400px;
 	height: 1050px;
+}
+div#middlePane {
+	width: 1000px;
+	height: 1050px;
+}
+div#rightPane {
+	width: 400px;
+	height: 1050px;
+}
+div#leftPane, div#middlePane, div#rightPane {
 	float: left;
 	background-color: inherit;
 	color: #222;
 }
-div.dualPane {
+
+div#fullPaneAllowedActions {
 	width: 400px;
 	height: 550px;
-	background-color: inherit;
-	color: #222;
 }
-div.halfPane {
+div.halfPaneAllowedActions {
 	width: 200px;
 	height: 550px;
-	background-color: inherit;
-	color: #222;
 	float: left;
 	text-align: center;
 }
@@ -82,7 +89,7 @@ div#myLine {
 	height: 2px;
 	background-color: #331;
 }
-div#resourceTitle {
+div#resourceTitle, div#allowedActionsTitle {
 	font-size: 28px;
 	font-weight: 600;
 	letter-spacing: 0.1em;
@@ -93,7 +100,7 @@ div#resourceTitle {
 	text-align: center;
 	background-color: inherit;
 }
-div#resourceCards {
+div#resourceCards, div#buildCards {
 	width: 400px;
 	height: 80px;
 	background-color: inherit;
@@ -107,11 +114,6 @@ div#resource1, div#resource2, div#resource3, div#resource4, div#resource5, div#p
 	border: 1px solid #222;
 }
 
-div#buildCards {
-	width: 400px;
-	height: 80px;
-	background-color: inherit;
-}
 div#smResource1, div#smResource2, div#smResource3, div#smResource4, div#smResource5 {
 	width: 55px;
 	height: 66px;
@@ -180,12 +182,6 @@ div#numResourceCards1, div#numResourceCards2, div#numResourceCards3, div#numReso
 	margin: 5px 7px 5px 11px;
 	border-radius: 8px;
 }
-div#middlePane {
-	width: 1000px;
-	height: 1050px;
-	float: left;
-	background-color: inherit;
-}
 div#middleTop {
 	width: 1000px;
 	height: 75px;
@@ -201,13 +197,6 @@ div#middleBottom {
 	height: 75px;
 	background-color: inherit;
 	text-align:center;
-}
-div#rightPane {
-	width: 400px;
-	height: 1050px;
-	float: left;
-	background-color: inherit;
-	color: #222;
 }
 div.clearBoth {
 	clear: both;
@@ -298,7 +287,7 @@ div#playerPointsGroup1, div#playerPointsGroup2, div#playerPointsGroup3, div#play
 	box-sizing: border-box;
 } 
  
-div#pp1Amount, div#pp2Amount, div#pp3Amount, div#pp4Amount {
+div#numVictoryPoints1, div#numVictoryPoints2, div#numVictoryPoints3, div#numVictoryPoints4 {
 	width: 120px;
 	height: 55px;
 	background-color: black;
@@ -307,16 +296,16 @@ div#pp1Amount, div#pp2Amount, div#pp3Amount, div#pp4Amount {
 	margin: 0 40px 0 40px;
 	border-radius: 20px;
 } 
-div#pp1Amount {
+div#numVictoryPoints1 {
 	color: #00f;
 }
-div#pp2Amount {
+div#numVictoryPoints2 {
 	color: #c00;
 }
-div#pp3Amount {
+div#numVictoryPoints3 {
 	color: #0c0;
 }
-div#pp4Amount {
+div#numVictoryPoints4 {
 	color: #cc0;
 }
 
@@ -329,13 +318,13 @@ div#pp1Name, div#pp2Name, div#pp3Name, div#pp4Name {
 	text-align: center;
 }
 
-div#numLongestRoad {
+div#numLongestRoad, div#numForts {
 	height: 55px;
 	background-color: inherit;
 	width: 100%;
   	text-align: center;
 }
-div#numLongestRoad1, div#numLongestRoad2, div#numLongestRoad3, div#numLongestRoad4 {
+div#numLongestRoad1, div#numLongestRoad2, div#numLongestRoad3, div#numLongestRoad4, div#numForts1, div#numForts2, div#numForts3, div#numForts4 {
 	font-size: 32px;
 	font-weight: 600;
 	width: 60px;
@@ -358,5 +347,27 @@ div#numLongestRoad4 {
 	color: #cc0;
 }
  
+div#numForts1 {
+	color: #00f;
+}
+div#numForts2 {
+	color: #c00;
+}
+div#numForts3 {
+	color: #0c0;
+}
+div#numForts4 {
+	color: #cc0;
+}
+
+button.myButtonLong {
+	margin-top: 10px;
+	font-size: 20px;
+	background-color: black;
+	color: red;
+	width: 100%;
+	height: 2em;
+	border: 1px solid red;
+}
  
  

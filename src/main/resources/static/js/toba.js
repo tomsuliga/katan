@@ -137,11 +137,11 @@ function getOwnerColor(owner) {
 	let color = "#bbb";
 	
 	if (owner == "P1") {
-		color = "#f00";
+		color = "#00f";
 	} else if (owner == "P2") {
-		color = "#0d0";
+		color = "#d00";
 	} else if (owner == "P3") {
-		color = "#00e";
+		color = "#0d0";
 	} else if (owner == "P4") {
 		color = "#dd0";
 	}
@@ -607,7 +607,8 @@ stomp.connect({}, function(frame) {
    });
 
     stomp.subscribe('/topic/result/doNextStep', function (message) {
-    	let tm = JSON.parse(message.body);
+    	let game = JSON.parse(message.body);
+    	let tm = game.tobaMessage;
     	if (tm.road1 != null) {
     		drawRoad(tm.road1);
     	}
@@ -618,6 +619,31 @@ stomp.connect({}, function(frame) {
     	if (tm.die1 != 0 && tm.die2 != 0) {
     		console.log("Dice=" + tm.die1 + ":" + tm.die2);
     		drawDice(tm.die1, tm.die2);
+    	}
+    	if (game.numForts[0] != 0) {
+    		$('div#numForts1').text(game.numForts[0]);
+    	}
+    	if (game.numForts[1] != 0) {
+    		$('div#numForts2').text(game.numForts[1]);
+    	}
+    	if (game.numForts[2] != 0) {
+    		$('div#numForts3').text(game.numForts[2]);
+    	}
+    	if (game.numForts[3] != 0) {
+    		$('div#numForts4').text(game.numForts[3]);
+    	}
+    	
+    	if (game.numVictoryPoints[0] != 0) {
+    		$('div#numVictoryPoints1').text(game.numVictoryPoints[0]);
+    	}
+    	if (game.numVictoryPoints[1] != 0) {
+    		$('div#numVictoryPoints2').text(game.numVictoryPoints[1]);
+    	}
+    	if (game.numVictoryPoints[2] != 0) {
+    		$('div#numVictoryPoints3').text(game.numVictoryPoints[2]);
+    	}
+    	if (game.numVictoryPoints[3] != 0) {
+    		$('div#numVictoryPoints4').text(game.numVictoryPoints[3]);
     	}
    });
     
