@@ -7,7 +7,7 @@ var vertices;
 var plots;
 var roads;
 let separation = 80;
-let x = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
+let xHexOffset = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
 
 var imgGreen = new Image();
 imgGreen.src = "img/rubies.jpg";
@@ -249,11 +249,13 @@ function drawPlots() {
 		    ctx.lineTo(p[0], p[1] + offset1);
 		   
 			ctx.stroke();
+			let robberOffsetY = 0;
 			
 			if (plots[i].resource == "WATER") {
 				ctx.fillStyle = "#115";
 			} else if (plots[i].resource == "ROBBER") {
 				ctx.fillStyle = "#333";
+				robberOffsetY = 32;
 			} else if (plots[i].resource == "ONE") {
 				//ctx.fillStyle = "#a44";
 				ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
@@ -356,7 +358,7 @@ function drawPlots() {
 					radius = 30;
 				}
 				ctx.beginPath();
-				ctx.arc(p[0], p[1] + (1.0 * separation), radius, 0, Math.PI*2, true); 
+				ctx.arc(p[0], p[1] + (1.0 * separation) - robberOffsetY, radius, 0, Math.PI*2, true); 
 				ctx.closePath();
 				
 				if (die <= 1) {
@@ -410,7 +412,7 @@ function drawPlots() {
 						offsetX = 5;
 					}
 				}
-				ctx.fillText(ch, p[0] - 10 - offsetX, p[1] + separation + 10 - dieOffset);
+				ctx.fillText(ch, p[0] - 10 - offsetX, p[1] + separation + 10 - dieOffset - robberOffsetY);
 				let dots = "";
 				let dieOffsetX = 0;
 				let dieOffsetY = 2;
@@ -454,7 +456,7 @@ function getXY(col, row)
 	let marginX = 10;
 	let marginY = 10;
 	
-	let centerX = (col) * x;
+	let centerX = (col) * xHexOffset;
 	let centerY = row * separation;
 	
 	//console.log(separation + "," + x);
@@ -504,6 +506,91 @@ function getXY(col, row)
 	return [finalX, finalY];
 }
 
+function drawDice(die1, die2) {
+	let xy = getXY(7,8);
+	let side = 45;
+	
+	drawDie(die1, side, xy[0] - 60, xy[1] - 45, "#b00", "#000");
+	drawDie(die2, side, xy[0] + 15, xy[1] - 45, "#000", "#b00");
+}
+
+function drawDie(die, side,x,y,color1,color2) {
+	ctx.roundRect(x, y, side, side, 10);
+	ctx.fillStyle = color1;
+	ctx.fill();
+	
+	let radius = 4;
+	
+	if (die == 2 || die == 3 || die == 4 || die == 5 || die == 6) {
+		ctx.beginPath();
+		ctx.arc(x+11, y+10, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2;
+		ctx.fill();
+	}
+
+	if (die == 6) {
+		ctx.beginPath();
+		ctx.arc(x+11, y+22, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2;
+		ctx.fill();
+	}
+
+	if (die == 4 || die == 5 || die == 6) {
+		ctx.beginPath();
+		ctx.arc(x+11, y+34, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2;
+		ctx.fill();
+	}
+
+	if (die == 4 || die == 5 || die == 6) {
+		ctx.beginPath();
+		ctx.arc(x+33, y+10, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2;
+		ctx.fill();
+	}
+
+	if (die == 6) {
+		ctx.beginPath();
+		ctx.arc(x+33, y+22, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2;
+		ctx.fill();
+	}
+
+	if (die == 2 || die == 3 || die == 4 || die == 5 || die == 6) {
+		ctx.beginPath();
+		ctx.arc(x+33, y+34, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2;
+		ctx.fill();
+	}
+	
+	if (die == 1 || die == 3 || die == 5) {
+		ctx.beginPath();
+		ctx.arc(x+22, y+22, radius, 0, Math.PI*2, true); 
+		ctx.closePath();
+		ctx.fillStyle = color2
+		ctx.fill();
+	}
+}
+
+CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
+	  if (w < 2 * r) r = w / 2;
+	  if (h < 2 * r) r = h / 2;
+	  this.beginPath();
+	  this.moveTo(x+r, y);
+	  this.arcTo(x+w, y,   x+w, y+h, r);
+	  this.arcTo(x+w, y+h, x,   y+h, r);
+	  this.arcTo(x,   y+h, x,   y,   r);
+	  this.arcTo(x,   y,   x+w, y,   r);
+	  this.closePath();
+	  return this;
+}
+
 ////// STOMP ////////
 var stompUrl = 'http://' + window.location.host + '/toba';
 var stompSock = new SockJS(stompUrl);
@@ -530,6 +617,7 @@ stomp.connect({}, function(frame) {
     	}
     	if (tm.die1 != 0 && tm.die2 != 0) {
     		console.log("Dice=" + tm.die1 + ":" + tm.die2);
+    		drawDice(tm.die1, tm.die2);
     	}
    });
     
