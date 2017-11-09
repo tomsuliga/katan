@@ -6,8 +6,15 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.suliga.toba.controller.MainController;
 
 public class Game {
+	private static final Logger logger = LoggerFactory.getLogger(Game.class);
+
 	public static final int NUM_COLS = 15;
 	public static final int NUM_ROWS = 16;
 	
@@ -18,15 +25,19 @@ public class Game {
 	private Map<Integer, Vertex> adjMap;
 	
 	private List<Plot> plots;
-	
+
 	private List<Road> roads;
-	
+
 	private int numTurns;
 	
 	private int[] numForts;
 	
+	private int[] numCastles;
+
 	private int[] numVictoryPoints;
 
+	private int[] numLongestRoad;
+		
 	private TobaMessage tobaMessage;
 	
 	public Game() {}
@@ -42,7 +53,9 @@ public class Game {
 		plots = new ArrayList<>();
 		roads = new ArrayList<>();
 		numForts = new int[4];
+		numCastles = new int[4];
 		numVictoryPoints = new int[4];
+		numLongestRoad = new int[4];
 		int id = 0;
 		Vertex v = null;
 		numTurns = 0;
@@ -224,6 +237,7 @@ public class Game {
 }
 	
 	private void buildHexEdges(int id) {
+		// These are the 6 edges - each with a From and a To
 		adjMap.get(id).addAdjVertex(id+14);
 		adjMap.get(id+14).addAdjVertex(id);
 		
@@ -253,14 +267,6 @@ public class Game {
 
 	public List<Plot> getPlots() {
 		return plots;
-	}
-
-	public List<Road> getRoads() {
-		return roads;
-	}
-	
-	public void addRoad(Road road) {
-		roads.add(road);
 	}
 
 	public String getSessionId() {
@@ -314,6 +320,64 @@ public class Game {
 	
 	public void addNumVictoryPoints(int index) {
 		this.numVictoryPoints[index]++;
+	}
+
+	public int[] getNumCastles() {
+		return numCastles;
+	}
+
+	public void setNumCastles(int[] numCastles) {
+		this.numCastles = numCastles;
+	}
+	
+	public void addNumCastles(int index) {
+		numCastles[index]++;
+		addNumVictoryPoints(index);
+		addNumVictoryPoints(index);
+	}
+
+	public int[] getNumLongestRoad() {
+		return numLongestRoad;
+	}
+	
+	public void addRoad(Road road) {
+		roads.add(road);
+		calculateLongestRoads();
+	}
+	
+
+	public List<Road> getRoads() {
+		return roads;
+	}
+
+	public void calculateLongestRoads() {
+		for (int owner=1;owner<=4;owner++) {
+			for (int row=0;row<NUM_ROWS;row++) {
+				for (int col=0;col<NUM_COLS;col++) {
+					Vertex v = vertices[col][row];
+					List<Road> roads = v.getRoads();
+					int owner2 = owner;
+					roads.forEach(r -> {
+						if (r.getOwner().ordinal() == owner2) {
+							logger.info("Found Vertex: " + v);
+							logger.info("Found Round: " + r);
+							boolean[] visited = new boolean[200];
+							visited[r.getFromVertexId()] = true;
+							if (numLongestRoad[owner2-1] == 0) {
+								numLongestRoad[owner2-1] = 1;
+							}
+							Vertex nextVertex = adjMap.get(r.getToVertexId());
+							List<Road> nextRoads = nextVertex.getRoads();
+							nextRoads.forEach(r2 -> {
+								if (r2.getOwner().ordinal() == owner2 && r2 != r) {
+									numLongestRoad[owner2-1] = 2;
+								}
+							});
+						}
+					});
+				}
+			}
+		}
 	}
 }
 

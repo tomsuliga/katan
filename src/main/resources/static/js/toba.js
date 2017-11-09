@@ -48,8 +48,8 @@ function drawRoads() {
 }
 
 function drawRoad(road) {
-	console.log("road=" + road.owner + "," + road.fromVertex.col + "," + road.fromVertex.row + "," + road.toVertex.col + "," + road.toVertex.row);
-	drawLine(road.owner, road.fromVertex.col, road.fromVertex.row, road.toVertex.col, road.toVertex.row);
+	console.log("drawRoad " + road.owner + ", " + road.fromCol + ", " + road.fromRow + ", " + road.toCol + ", " + road.toRow);
+	drawLine(road.owner, road.fromCol, road.fromRow, road.toCol, road.toRow);
 }
 
 function drawSpots() {
@@ -99,7 +99,7 @@ function drawImprovement(col,row,improvement,owner) {
 	let color = getOwnerColor(owner);
 	
 	// Draw large circle first - if needed
-	if (improvement == "CITY") {
+	if (improvement == "CASTLE") {
 		let xy = getXY(col,row);
 		// Circle
 		let radius = 25;
@@ -116,7 +116,7 @@ function drawImprovement(col,row,improvement,owner) {
 	}
 	
 	// Draw small circle by itself or on top of large circle
-	if (improvement == "TOWN" || improvement == "CITY") {
+	if (improvement == "FORT" || improvement == "CASTLE") {
 		let xy = getXY(col,row);
 		// Circle
 		let radius = 16;
@@ -275,7 +275,7 @@ function drawPlots() {
 			
 		    //context.fillRect(0, 0, 300, 300);
 			if (plots[i].resource != "WATER" && plots[i].resource != "ROBBER") {
-				ctx.globalAlpha = 0.60;
+				ctx.globalAlpha = 0.75;
 			}
 			ctx.fill();
 			ctx.globalAlpha = 1.0;
@@ -620,30 +620,26 @@ stomp.connect({}, function(frame) {
     		console.log("Dice=" + tm.die1 + ":" + tm.die2);
     		drawDice(tm.die1, tm.die2);
     	}
-    	if (game.numForts[0] != 0) {
-    		$('div#numForts1').text(game.numForts[0]);
-    	}
-    	if (game.numForts[1] != 0) {
-    		$('div#numForts2').text(game.numForts[1]);
-    	}
-    	if (game.numForts[2] != 0) {
-    		$('div#numForts3').text(game.numForts[2]);
-    	}
-    	if (game.numForts[3] != 0) {
-    		$('div#numForts4').text(game.numForts[3]);
-    	}
     	
-    	if (game.numVictoryPoints[0] != 0) {
-    		$('div#numVictoryPoints1').text(game.numVictoryPoints[0]);
+    	for (let i=0;i<4;i++) {
+    	   	if (game.numVictoryPoints[i] != 0) {
+        		$('div#numVictoryPoints' + (i+1)).text(game.numVictoryPoints[i]);
+        	}
+       	}
+    	for (let i=0;i<4;i++) {
+        	if (game.numLongestRoad[i] != 0) {
+        		$('div#numLongestRoad' + (i+1)).text(game.numLongestRoad[i]);
+        	}
     	}
-    	if (game.numVictoryPoints[1] != 0) {
-    		$('div#numVictoryPoints2').text(game.numVictoryPoints[1]);
-    	}
-    	if (game.numVictoryPoints[2] != 0) {
-    		$('div#numVictoryPoints3').text(game.numVictoryPoints[2]);
-    	}
-    	if (game.numVictoryPoints[3] != 0) {
-    		$('div#numVictoryPoints4').text(game.numVictoryPoints[3]);
+    	for (let i=0;i<4;i++) {
+        	if (game.numForts[i] != 0) {
+        		$('div#numForts' + (i+1)).text(game.numForts[i]);
+        	}
+    	}    	
+    	for (let i=0;i<4;i++) {
+        	if (game.numCastles[i] != 0) {
+        		$('div#numCastles' + (i+1)).text(game.numCastles[i]);
+        	}
     	}
    });
     

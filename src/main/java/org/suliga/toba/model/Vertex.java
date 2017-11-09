@@ -1,14 +1,17 @@
 package org.suliga.toba.model;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class Vertex {
 	private boolean hidden;
-	private Improvement improvement;
+	private Improvement improvement; // Fort or Castle on a Vertex
 	private Owner owner;
 	private int id;
 	private Set<Integer> adjVertices;
+	private List<Road> roads;
 	private int col;
 	private int row;
 	
@@ -22,6 +25,7 @@ public class Vertex {
 		this.improvement = Improvement.NONE;
 		this.owner = Owner.NONE;
 		adjVertices = new HashSet<>();
+		roads = new ArrayList<>();
 	}
 
 	public boolean isHidden() {
@@ -50,11 +54,7 @@ public class Vertex {
 	
 	@Override
 	public String toString() {
-		if (hidden) {
-			return ".";
-		}
-		
-		return "x";
+		return "Vertex " + owner.toString() + ", id=" + id + ", col:row=" + col + ":" + row;
 	}
 
 	public int getId() {
@@ -80,6 +80,14 @@ public class Vertex {
 	public int getRow() {
 		return row;
 	}
+
+	public List<Road> getRoads() {
+		return roads;
+	}
+	public void addRoad(Road road) {
+		roads.add(road);
+	}
+
 }
 
 

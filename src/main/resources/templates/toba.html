@@ -66,8 +66,8 @@
 				<button class="myButton btnBlack btn btn-danger ">Build Fort</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Castle</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Power</button>
-				<button class="myButton btnBlack btn btn-danger ">Trade</button>
 				<button class="myButton btnBlack btn btn-danger ">Use Power</button>
+				<button class="myButton btnBlack btn btn-danger ">Trade...</button>
 				<button class="myButtonLg btnBlack btn btn-danger">End Turn</button>
 			</div>
 		</div>
@@ -99,7 +99,7 @@
 			<canvas id="canvasHex" width="990" height="900">Your browser does not support the HTML5 canvas tag.</canvas>
 		</div>
 		<div id="middleBottom">
-			<div id="currentTurnTitle">Current Turn: Tom</div>
+			<div id="currentTurnTitle">Welcome to Settlers of Toba<br>New Game<br>Current Turn: Tom</div>
 		</div>
 	</div>
 	
@@ -127,43 +127,43 @@
 		<div id="myLine"></div> 
 		<div id="resourceTitle">Longest Road</div>
 		<div id="numLongestRoad">
-			<div id="numLongestRoad1">0</div>
-			<div id="numLongestRoad2">0</div>
-			<div id="numLongestRoad3">0</div>
-			<div id="numLongestRoad4">0</div>
+			<div class="numLongestRoadNumber" id="numLongestRoad1">0</div>
+			<div class="numLongestRoadNumber" id="numLongestRoad2">0</div>
+			<div class="numLongestRoadNumber" id="numLongestRoad3">0</div>
+			<div class="numLongestRoadNumber" id="numLongestRoad4">0</div>
+		</div>
+		<div id="myLine"></div>
+		<div id="resourceTitle">Number of Castles</div>
+		<div id="numCastles">
+			<div class="numCastlesNumber" id="numCastles1">0</div>
+			<div class="numCastlesNumber" id="numCastles2">0</div>
+			<div class="numCastlesNumber" id="numCastles3">0</div>
+			<div class="numCastlesNumber" id="numCastles4">0</div>
 		</div>
 		<div id="myLine"></div>
 		<div id="resourceTitle">Number of Forts</div>
 		<div id="numForts">
-			<div id="numForts1">0</div>
-			<div id="numForts2">0</div>
-			<div id="numForts3">0</div>
-			<div id="numForts4">0</div>
-		</div>
-		<div id="myLine"></div>
-		<div id="resourceTitle">Number of Castles</div>
-		<div id="numLongestRoad">
-			<div id="numLongestRoad1">0</div>
-			<div id="numLongestRoad2">0</div>
-			<div id="numLongestRoad3">0</div>
-			<div id="numLongestRoad4">0</div>
+			<div class="numFortsNumber" id="numForts1">0</div>
+			<div class="numFortsNumber" id="numForts2">0</div>
+			<div class="numFortsNumber" id="numForts3">0</div>
+			<div class="numFortsNumber" id="numForts4">0</div>
 		</div>
 		<div id="myLine"></div>
 		<div id="resourceTitle">Number of Cards</div>
 		<div id="numLongestRoad">
-			<div id="numLongestRoad1">0</div>
-			<div id="numLongestRoad2">0</div>
-			<div id="numLongestRoad3">0</div>
-			<div id="numLongestRoad4">0</div>
+			<div class="totalAllCardsNumber" id="totalAllCards1">0</div>
+			<div class="totalAllCardsNumber" id="totalAllCards2">0</div>
+			<div class="totalAllCardsNumber" id="totalAllCards3">0</div>
+			<div class="totalAllCardsNumber" id="totalAllCards4">0</div>
 		</div>
 		<div id="myLine"></div>
 		<div id="resourceTitle">Your Cards</div>
 		<div id="resourceCards">
-			<div id="resource1"></div>
-			<div id="resource2"></div>
-			<div id="resource3"></div>
-			<div id="resource4"></div>
-			<div id="resource5"></div>
+			<div class="yourCardsImage" id="yourCardsImage1"></div>
+			<div class="yourCardsImage" id="yourCardsImage2"></div>
+			<div class="yourCardsImage" id="yourCardsImage3"></div>
+			<div class="yourCardsImage" id="yourCardsImage4"></div>
+			<div class="yourCardsImage" id="yourCardsImage5"></div>
 		</div>
 		<div id="numResourceCards">
 			<div id="numResourceCards1">0</div>
@@ -175,11 +175,11 @@
 		<div id="myLine"></div>
 		<div id="resourceTitle">Power Cards</div>
 		<div id="resourceCards">
-			<div id="power1" class="cardLetter">Mo</div>
-			<div id="power2" class="cardLetter">Kn</div>
-			<div id="power3" class="cardLetter">V.P.</div>
-			<div id="power4" class="cardLetter">Rs</div>
-			<div id="power5" class="cardLetter">Rd</div>
+			<div class="cardLetter powerCardsImage" id="power1">Mo</div>
+			<div class="cardLetter powerCardsImage" id="power2">Kn</div>
+			<div class="cardLetter powerCardsImage" id="power3">V.P.</div>
+			<div class="cardLetter powerCardsImage" id="power4">Rs</div>
+			<div class="cardLetter powerCardsImage" id="power5">Rd</div>
 		</div>
 		<div id="numResourceCards">
 			<div id="numResourceCards1">0</div>

@@ -1,30 +1,22 @@
 package org.suliga.toba.model;
 
 public class Road {
-	private Vertex fromVertex;
-	private Vertex toVertex;
+	private int fromVertexId;
+	private int fromCol;
+	private int fromRow;
+	private int toVertexId;
+	private int toCol;
+	private int toRow;
 	private Owner owner;
 	
 	public Road(Owner owner, Vertex fromVertex, Vertex toVertex) {
-		this.fromVertex = fromVertex;
-		this.toVertex = toVertex;
+		this.fromVertexId = fromVertex.getId();
+		this.fromCol = fromVertex.getCol();
+		this.fromRow = fromVertex.getRow();
+		this.toVertexId = toVertex.getId();
+		this.toCol = toVertex.getCol();
+		this.toRow = toVertex.getRow();
 		this.owner = owner;
-	}
-
-	public Vertex getFromVertex() {
-		return fromVertex;
-	}
-
-	public void setFromVertex(Vertex fromVertex) {
-		this.fromVertex = fromVertex;
-	}
-
-	public Vertex getToVertex() {
-		return toVertex;
-	}
-
-	public void setToVertex(Vertex toVertex) {
-		this.toVertex = toVertex;
 	}
 
 	public Owner getOwner() {
@@ -34,4 +26,67 @@ public class Road {
 	public void setOwner(Owner owner) {
 		this.owner = owner;
 	}
+
+	public int getFromVertexId() {
+		return fromVertexId;
+	}
+
+	public void setFromVertexId(int fromVertexId) {
+		this.fromVertexId = fromVertexId;
+	}
+
+	public int getFromCol() {
+		return fromCol;
+	}
+
+	public void setFromCol(int fromCol) {
+		this.fromCol = fromCol;
+	}
+
+	public int getFromRow() {
+		return fromRow;
+	}
+
+	public void setFromRow(int fromRow) {
+		this.fromRow = fromRow;
+	}
+
+	public int getToVertexId() {
+		return toVertexId;
+	}
+
+	public void setToVertexId(int toVertexId) {
+		this.toVertexId = toVertexId;
+	}
+
+	public int getToCol() {
+		return toCol;
+	}
+
+	public void setToCol(int toCol) {
+		this.toCol = toCol;
+	}
+
+	public int getToRow() {
+		return toRow;
+	}
+
+	public void setToRow(int toRow) {
+		this.toRow = toRow;
+	}
+	
+	@Override
+	public String toString() {
+		return "Road: " + owner.toString() + ", " + fromVertexId + ", " + fromCol + ":" + fromRow + ", " + toVertexId + ", " + toCol + ":" + toRow;
+	}
 }
+
+
+
+
+
+
+
+
+
+
