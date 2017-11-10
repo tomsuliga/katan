@@ -79,7 +79,7 @@ public class MainController {
 			}
 		}
 		Moves[] allMoves = new Moves[8];
-		allMoves[0] = new Moves(Owner.P1, Improvement.FORT, 66, 51);
+		allMoves[0] = new Moves(Owner.P1, Improvement.FORT, 51, 66);
 		allMoves[1] = new Moves(Owner.P2, Improvement.FORT, 109, 124);
 		allMoves[2] = new Moves(Owner.P3, Improvement.FORT, 157, 171);
 		allMoves[3] = new Moves(Owner.P4, Improvement.FORT, 99, 84);
@@ -100,11 +100,33 @@ public class MainController {
 		game.addRoad(road);
 		tm.setRoad1(road);
 		tm.setVertex1(vertex1);
-		game.addNumForts(thisMove.owner.ordinal()-1);
+		if (thisMove.improvement == Improvement.CASTLE) {
+			game.addNumCastles(thisMove.owner.ordinal()-1);
+		} else {
+			game.addNumForts(thisMove.owner.ordinal()-1);
+		}
 		game.endTurn();
 		game.setTobaMessage(tm);
 		
 		simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
+		
+		// temp longest road
+		if (game.getNumTurns() == 1) {
+			int[][] roads = { {66,82}, {82,97}, {97,111}, {111,126} };
+			for (int i=0;i<roads.length;i++) {
+				int n1 = roads[i][0];
+				int n2 = roads[i][1];
+				Vertex v1 = game.getAdjMap().get(n1);
+				Vertex v2 = game.getAdjMap().get(n2);
+				Road r = new Road(Owner.P1, v1, v2);
+				v1.addRoad(r);
+				v2.addRoad(r);
+				game.addRoad(r);
+				tm.setRoad1(r);
+				game.setTobaMessage(tm);
+				simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
+			}
+		}
 	}
 	
 	@MessageMapping("/toba/rollDice")
@@ -115,5 +137,15 @@ public class MainController {
 		Game game =  games.get(sessionId);
 		game.setTobaMessage(tm);
 		simpMessagingTemplate.convertAndSend("/topic/result/diceRolled", game);
+	}
+
+	@MessageMapping("/toba/newGame")
+	public void handleNewGame(String sessionId) {
+		logger.info("sessionId = " + sessionId);
+		TobaMessage tm = new TobaMessage();
+		tm.rollDice();
+		Game game =  games.get(sessionId);
+		game.init();
+		simpMessagingTemplate.convertAndSend("/topic/result/newGame", game);
 	}
 }

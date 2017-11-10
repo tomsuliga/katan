@@ -6,9 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 public class Vertex {
+	private Owner owner;
 	private boolean hidden;
 	private Improvement improvement; // Fort or Castle on a Vertex
-	private Owner owner;
 	private int id;
 	private Set<Integer> adjVertices;
 	private List<Road> roads;

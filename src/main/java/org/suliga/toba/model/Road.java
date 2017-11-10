@@ -3,13 +3,13 @@ package org.suliga.toba.model;
 import java.util.Objects;
 
 public class Road {
+	private Owner owner;
 	private int fromVertexId;
 	private int fromCol;
 	private int fromRow;
 	private int toVertexId;
 	private int toCol;
 	private int toRow;
-	private Owner owner;
 	
 	public Road(Owner owner, Vertex fromVertex, Vertex toVertex) {
 		Objects.requireNonNull(owner);

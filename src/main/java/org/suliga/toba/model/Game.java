@@ -3,14 +3,14 @@ package org.suliga.toba.model;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.suliga.toba.controller.MainController;
 
 public class Game {
 	private static final Logger logger = LoggerFactory.getLogger(Game.class);
@@ -21,6 +21,7 @@ public class Game {
 	private String sessionId;
 	
 	private Vertex[][] vertices;
+	private List<Vertex> verticesList;
 	
 	private Map<Integer, Vertex> adjMap;
 	
@@ -47,8 +48,9 @@ public class Game {
 		init();
 	}
 	
-	private void init() {
+	public void init() {
 		vertices = new Vertex[NUM_COLS][NUM_ROWS];
+		verticesList = new ArrayList<>();
 		adjMap  = new HashMap<>();
 		plots = new ArrayList<>();
 		roads = new ArrayList<>();
@@ -85,6 +87,7 @@ public class Game {
 				boolean hidden = layout[row].charAt(col) == '.' ? true : false;
 				v = new Vertex(id, hidden, col, row);
 				vertices[col][row] = v;
+				verticesList.add(v);
 				adjMap.put(id,  v);
 				id++;
 			}
@@ -343,7 +346,7 @@ public class Game {
 	
 	public void addRoad(Road road) {
 		roads.add(road);
-		calculateLongestRoads();
+		calculateLongestRoad();
 	}
 	
 
@@ -351,35 +354,40 @@ public class Game {
 		return roads;
 	}
 
-	public void calculateLongestRoads() {
-		for (int owner=1;owner<=4;owner++) {
-			for (int row=0;row<NUM_ROWS;row++) {
-				for (int col=0;col<NUM_COLS;col++) {
-					Vertex v = vertices[col][row];
-					List<Road> roads = v.getRoads();
-					int owner2 = owner;
-					roads.forEach(r -> {
-						if (r.getOwner().ordinal() == owner2) {
-							logger.info("Found Vertex: " + v);
-							logger.info("Found Round: " + r);
-							boolean[] visited = new boolean[200];
-							visited[r.getFromVertexId()] = true;
-							if (numLongestRoad[owner2-1] == 0) {
-								numLongestRoad[owner2-1] = 1;
-							}
-							Vertex nextVertex = adjMap.get(r.getToVertexId());
-							List<Road> nextRoads = nextVertex.getRoads();
-							nextRoads.forEach(r2 -> {
-								if (r2.getOwner().ordinal() == owner2 && r2 != r) {
-									numLongestRoad[owner2-1] = 2;
-								}
-							});
-						}
-					});
-				}
-			}
+	private void calculateLongestRoad() {
+		numLongestRoad = new int[4];
+		for (int currPlayer=1;currPlayer<5;currPlayer++) {
+			boolean[] pointsVisited = new boolean[240];
+			int[] owner = new int[1];
+			owner[0] = currPlayer;
+			Deque<Road> roadStack = new LinkedList<>();
+			verticesList.forEach(v -> {
+				recursiveLongestRoad(pointsVisited, v, owner, roadStack);
+				pointsVisited[v.getId()] = false;
+			});
 		}
 	}
+	
+	private void recursiveLongestRoad(boolean[] pointsVisited, Vertex v, int[] owner, Deque<Road> roadStack) {
+		pointsVisited[v.getId()] = true;
+		v.getRoads().forEach(r -> {
+			if (r.getOwner().ordinal() == owner[0]) {
+				if (r != roadStack.peek()) {
+					roadStack.push(r);
+					//logger.info("push r: " + r  + "  = " + roadStack.size());
+					numLongestRoad[owner[0]-1] = Math.max(numLongestRoad[owner[0]-1], roadStack.size());
+					Vertex nextVertex = adjMap.get(r.getToVertexId());
+					if (!pointsVisited[nextVertex.getId()]) {
+						if (nextVertex.getImprovement() == Improvement.NONE || nextVertex.getOwner().ordinal() == owner[0]) {
+							recursiveLongestRoad(pointsVisited, nextVertex, owner, roadStack);
+						}
+					}
+					Road rp = roadStack.pop();
+					//logger.info("pop rp: " + rp);
+				}
+			}
+		});
+	}	
 }
 
 

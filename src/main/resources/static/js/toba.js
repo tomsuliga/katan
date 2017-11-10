@@ -647,7 +647,13 @@ stomp.connect({}, function(frame) {
     	}
     });
     
-	let sessionId = $('div#gameSpace').attr("data-sessionId");
+    stomp.subscribe('/topic/result/newGame', function (message) {
+    	let game = JSON.parse(message.body);
+    	let tm = game.tobaMessage;
+    	location.reload();
+    });
+
+    let sessionId = $('div#gameSpace').attr("data-sessionId");
 	var payload = JSON.stringify( { 'sessionId':sessionId } );
 	stomp.send('/stomp/toba/getGame', {}, payload);
 });
@@ -662,6 +668,12 @@ $(document).on('click', '#btnRollDice', function() {
 	let sessionId = $('div#gameSpace').attr("data-sessionId");
 	var payload = JSON.stringify( { 'sessionId':sessionId } );
 	stomp.send('/stomp/toba/rollDice', {}, payload);
+});
+
+$(document).on('click', '#btnNewGame', function() {
+	let sessionId = $('div#gameSpace').attr("data-sessionId");
+	var payload = JSON.stringify( { 'sessionId':sessionId } );
+	stomp.send('/stomp/toba/newGame', {}, payload);
 });
 
 
