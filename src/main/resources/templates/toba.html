@@ -22,29 +22,29 @@
 		<div id="buildingCosts">
 			<div class="bcTitle">Road</div>
 				<div id="buildCards">
-					<div id="smResource1"></div>
-					<div id="smResource2"></div>
+					<div class="smallResourceImage resourceImage1"></div>
+					<div class="smallResourceImage resourceImage2"></div>
 				</div>
 			<div class="bcTitle">Fort</div>
 				<div id="buildCards">
-					<div id="smResource1"></div>
-					<div id="smResource2"></div>
-					<div id="smResource3"></div>
-					<div id="smResource4"></div>
+					<div class="smallResourceImage resourceImage1"></div>
+					<div class="smallResourceImage resourceImage2"></div>
+					<div class="smallResourceImage resourceImage3"></div>
+					<div class="smallResourceImage resourceImage4"></div>
 				</div>
 			<div class="bcTitle">Castle</div>
 				<div id="buildCards">
-					<div id="smResource3"></div>
-					<div id="smResource3"></div>
-					<div id="smResource5"></div>
-					<div id="smResource5"></div>
-					<div id="smResource5"></div>
+					<div class="smallResourceImage resourceImage3"></div>
+					<div class="smallResourceImage resourceImage3"></div>
+					<div class="smallResourceImage resourceImage5"></div>
+					<div class="smallResourceImage resourceImage5"></div>
+					<div class="smallResourceImage resourceImage5"></div>
 				</div>
 			<div class="bcTitle">Power Card</div>
 				<div id="buildCards">
-					<div id="smResource3"></div>
-					<div id="smResource4"></div>
-					<div id="smResource5"></div>
+					<div class="smallResourceImage resourceImage3"></div>
+					<div class="smallResourceImage resourceImage4"></div>
+					<div class="smallResourceImage resourceImage5"></div>
 				</div>
 		</div>
 		<div id="myLine"></div>
@@ -61,7 +61,7 @@
 				<button class="myButton btnGray btn btn-primary">Load</button>	
 			</div>
 			<div class="halfPaneAllowedActions">
-				<button class="myButtonLg btnBlack btn btn-danger">Roll Dice</button>
+				<button class="myButtonLg btnBlack btn btn-danger" id="btnRollDice">Roll Dice</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Road</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Fort</button>
 				<button class="myButton btnBlack btn btn-danger ">Build Castle</button>
@@ -125,7 +125,7 @@
 		</div>
 		<div class="clearBoth"></div>
 		<div id="myLine"></div> 
-		<div id="resourceTitle">Longest Road</div>
+		<div class="resourceTitle">Longest Road</div>
 		<div id="numLongestRoad">
 			<div class="numLongestRoadNumber" id="numLongestRoad1">0</div>
 			<div class="numLongestRoadNumber" id="numLongestRoad2">0</div>
@@ -133,7 +133,7 @@
 			<div class="numLongestRoadNumber" id="numLongestRoad4">0</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Number of Castles</div>
+		<div class="resourceTitle">Number of Castles</div>
 		<div id="numCastles">
 			<div class="numCastlesNumber" id="numCastles1">0</div>
 			<div class="numCastlesNumber" id="numCastles2">0</div>
@@ -141,7 +141,7 @@
 			<div class="numCastlesNumber" id="numCastles4">0</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Number of Forts</div>
+		<div class="resourceTitle">Number of Forts</div>
 		<div id="numForts">
 			<div class="numFortsNumber" id="numForts1">0</div>
 			<div class="numFortsNumber" id="numForts2">0</div>
@@ -149,7 +149,7 @@
 			<div class="numFortsNumber" id="numForts4">0</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Number of Cards</div>
+		<div class="resourceTitle">Number of Cards</div>
 		<div id="numLongestRoad">
 			<div class="totalAllCardsNumber" id="totalAllCards1">0</div>
 			<div class="totalAllCardsNumber" id="totalAllCards2">0</div>
@@ -157,23 +157,23 @@
 			<div class="totalAllCardsNumber" id="totalAllCards4">0</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Your Cards</div>
+		<div class="resourceTitle">Your Cards</div>
 		<div id="resourceCards">
-			<div class="yourCardsImage" id="yourCardsImage1"></div>
-			<div class="yourCardsImage" id="yourCardsImage2"></div>
-			<div class="yourCardsImage" id="yourCardsImage3"></div>
-			<div class="yourCardsImage" id="yourCardsImage4"></div>
-			<div class="yourCardsImage" id="yourCardsImage5"></div>
+			<div class="yourCardsImage resourceImage1"></div>
+			<div class="yourCardsImage resourceImage2"></div>
+			<div class="yourCardsImage resourceImage3"></div>
+			<div class="yourCardsImage resourceImage4"></div>
+			<div class="yourCardsImage resourceImage5"></div>
 		</div>
 		<div id="numResourceCards">
-			<div id="numResourceCards1">0</div>
-			<div id="numResourceCards2">0</div>
-			<div id="numResourceCards3">0</div>
-			<div id="numResourceCards4">0</div>
-			<div id="numResourceCards5">0</div>
+			<div class="numYourResourceCardsNumber" id="numResourceCards1">0</div>
+			<div class="numYourResourceCardsNumber" id="numResourceCards2">0</div>
+			<div class="numYourResourceCardsNumber" id="numResourceCards3">0</div>
+			<div class="numYourResourceCardsNumber" id="numResourceCards4">0</div>
+			<div class="numYourResourceCardsNumber" id="numResourceCards5">0</div>
 		</div>
 		<div id="myLine"></div>
-		<div id="resourceTitle">Power Cards</div>
+		<div class="resourceTitle">Power Cards</div>
 		<div id="resourceCards">
 			<div class="cardLetter powerCardsImage" id="power1">Mo</div>
 			<div class="cardLetter powerCardsImage" id="power2">Kn</div>
@@ -181,12 +181,12 @@
 			<div class="cardLetter powerCardsImage" id="power4">Rs</div>
 			<div class="cardLetter powerCardsImage" id="power5">Rd</div>
 		</div>
-		<div id="numResourceCards">
-			<div id="numResourceCards1">0</div>
-			<div id="numResourceCards2">0</div>
-			<div id="numResourceCards3">0</div>
-			<div id="numResourceCards4">0</div>
-			<div id="numResourceCards5">0</div>
+		<div id="numPowerCards">
+			<div class="numPowerCardsNumber" id="numPowerCards1">0</div>
+			<div class="numPowerCardsNumber" id="numPowerCards2">0</div>
+			<div class="numPowerCardsNumber" id="numPowerCards3">0</div>
+			<div class="numPowerCardsNumber" id="numPowerCards4">0</div>
+			<div class="numPowerCardsNumber" id="numPowerCards5">0</div>
 		</div>
 		<div id="myLine"></div>
 		<button class="myButtonLong">Debug Game</button>

@@ -1,5 +1,7 @@
 package org.suliga.toba.model;
 
+import java.util.Objects;
+
 public class Road {
 	private int fromVertexId;
 	private int fromCol;
@@ -10,13 +12,17 @@ public class Road {
 	private Owner owner;
 	
 	public Road(Owner owner, Vertex fromVertex, Vertex toVertex) {
+		Objects.requireNonNull(owner);
+		Objects.requireNonNull(fromVertex);
+		Objects.requireNonNull(toVertex);
+				
+		this.owner = owner;
 		this.fromVertexId = fromVertex.getId();
 		this.fromCol = fromVertex.getCol();
 		this.fromRow = fromVertex.getRow();
 		this.toVertexId = toVertex.getId();
 		this.toCol = toVertex.getCol();
 		this.toRow = toVertex.getRow();
-		this.owner = owner;
 	}
 
 	public Owner getOwner() {

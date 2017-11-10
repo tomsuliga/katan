@@ -146,6 +146,7 @@ public class Game {
 			}
 		}			
 		
+		// Number of resource plots is either 3 or 4 per type
 		List<Resource> resources = Arrays.asList(
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,
 				Resource.ONE, Resource.TWO, Resource.THREE, Resource.FOUR, Resource.FIVE,

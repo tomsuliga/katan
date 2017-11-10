@@ -30,7 +30,6 @@ div#leftPane, div#middlePane, div#rightPane {
 	background-color: inherit;
 	color: #222;
 }
-
 div#fullPaneAllowedActions {
 	width: 400px;
 	height: 550px;
@@ -71,6 +70,28 @@ div.bcTitle {
 	margin-left: 15px;
 	background-color: inherit;
 }
+div#victoryPointsTitle {
+	font-size: 28px;
+	font-weight: 600;
+	letter-spacing: 0.2em;
+	color: inherit;
+	width: 400px;
+	height: 50px;
+	padding-top: 5px;
+	text-align: center;
+	background-color: inherit;
+}
+div.resourceTitle, div#allowedActionsTitle {
+	font-size: 28px;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	color: inherit;
+	width: 400px;
+	height: 40px;
+	padding-top: 5px;
+	text-align: center;
+	background-color: inherit;
+}
 div#currentTurnTitle {
 	font-size: 18px;
 	font-weight: 600;
@@ -91,65 +112,44 @@ div#myLine {
 	height: 2px;
 	background-color: #331;
 }
-div#resourceTitle, div#allowedActionsTitle {
-	font-size: 28px;
-	font-weight: 600;
-	letter-spacing: 0.1em;
-	color: inherit;
-	width: 400px;
-	height: 40px;
-	padding-top: 5px;
-	text-align: center;
-	background-color: inherit;
-}
 div#resourceCards, div#buildCards {
 	width: 400px;
 	height: 80px;
 	background-color: inherit;
 }
+div.powerCardsImage, div.yourCardsImage, div.smallResourceImage {
+	width: 55px;
+	height: 66px;
+	float: left;
+	border-radius: 10px;
+	border: 1px solid #222;
+}
 div.powerCardsImage, div.yourCardsImage {
-	width: 55px;
-	height: 66px;
-	float: left;
 	margin: 10px 12px 0 12px;
-	border-radius: 10px;
-	border: 1px solid #222;
 }
-
-div#smResource1, div#smResource2, div#smResource3, div#smResource4, div#smResource5 {
-	width: 55px;
-	height: 66px;
-	float: left;
+div.smallResourceImage {
 	margin: 4px 12px 8px 10px;
-	border-radius: 10px;
-	border: 1px solid #222;
 }
-
-div#yourCardsImage1, div#smResource1 {
+div.resourceImage1 {
 	background-image: url('/img/wheat.jpg');
 	background-repeat: repeat;
 }
-
-div#yourCardsImage2, div#smResource2 {
+div.resourceImage2 {
 	background-image: url('/img/grass.jpg');
 	background-repeat: repeat;
 }
-
-div#yourCardsImage3, div#smResource3 {
+div.resourceImage3 {
 	background-image: url('/img/rubies.jpg');
 	background-repeat: repeat;
 }
-
-div#yourCardsImage4, div#smResource4 {
+div.resourceImage4 {
 	background-image: url('/img/cash.jpg');
 	background-repeat: repeat;
 }
-
-div#yourCardsImage5, div#smResource5 {
+div.resourceImage5 {
 	background-image: url('/img/lava.jpg');
 	background-repeat: repeat;
 }
-
 div#power1 {
 	background-color: #00f;
 }
@@ -172,18 +172,6 @@ div#numResourceCards {
 	background-color: inherit;
 }
 
-div#numResourceCards1, div#numResourceCards2, div#numResourceCards3, div#numResourceCards4, div#numResourceCards5 {
-	font-size: 32px;
-	font-weight: 600;
-	color: #00f;
-	width: 60px;
-	height: 40px;
-	text-align: center;
-	background-color: black;
-	float: left;
-	margin: 5px 7px 5px 11px;
-	border-radius: 8px;
-}
 div#middleTop {
 	width: 1000px;
 	height: 75px;
@@ -268,27 +256,13 @@ div.ff2 {
 
 #f2, #f4, #f6, #f8, #f10, #f12, #f14, #f16 {
 	transform: rotate(-10deg);
-}
- 
-div#victoryPointsTitle {
-	font-size: 28px;
-	font-weight: 600;
-	letter-spacing: 0.2em;
-	color: inherit;
-	width: 400px;
-	height: 50px;
-	padding-top: 5px;
-	text-align: center;
-	background-color: inherit;
-}
- 
+} 
 div#playerPointsGroup1, div#playerPointsGroup2, div#playerPointsGroup3, div#playerPointsGroup4 {
 	width: 190px;
 	float: left;
 	height: 95px;
 	box-sizing: border-box;
 } 
- 
 div#numVictoryPoints1, div#numVictoryPoints2, div#numVictoryPoints3, div#numVictoryPoints4 {
 	width: 120px;
 	height: 55px;
@@ -326,16 +300,25 @@ div#numLongestRoad, div#numForts, div#numCastles {
 	width: 100%;
   	text-align: center;
 }
-div.numLongestRoadNumber, div.numFortsNumber, div.numCastlesNumber, div.totalAllCardsNumber {
+div.numLongestRoadNumber, div.numFortsNumber, div.numCastlesNumber, div.totalAllCardsNumber, div.numYourResourceCardsNumber, div.numPowerCardsNumber {
 	font-size: 32px;
 	font-weight: 600;
 	width: 60px;
 	height: 40px;
 	background-color: black;
-	margin: 5px 10px 0 10px;
 	border-radius: 8px;
+}
+div.numLongestRoadNumber, div.numFortsNumber, div.numCastlesNumber, div.totalAllCardsNumber {
+	margin: 5px 10px 0 10px;
 	display: inline-block;
 }
+div.numYourResourceCardsNumber, div.numPowerCardsNumber {
+	text-align: center;
+	float: left;
+	margin: 5px 7px 5px 11px;
+	color: #00f;
+}
+
 div#numLongestRoad1 {
 	color: #00f;
 }

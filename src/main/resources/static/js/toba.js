@@ -615,12 +615,7 @@ stomp.connect({}, function(frame) {
     	if (tm.vertex1 != null) {
     		let v = tm.vertex1;
     		drawImprovement(v.col, v.row, v.improvement, v.owner);
-    	}
-    	if (tm.die1 != 0 && tm.die2 != 0) {
-    		console.log("Dice=" + tm.die1 + ":" + tm.die2);
-    		drawDice(tm.die1, tm.die2);
-    	}
-    	
+    	}    	
     	for (let i=0;i<4;i++) {
     	   	if (game.numVictoryPoints[i] != 0) {
         		$('div#numVictoryPoints' + (i+1)).text(game.numVictoryPoints[i]);
@@ -643,6 +638,15 @@ stomp.connect({}, function(frame) {
     	}
    });
     
+    stomp.subscribe('/topic/result/diceRolled', function (message) {
+    	let game = JSON.parse(message.body);
+    	let tm = game.tobaMessage;
+    	if (tm.die1 != 0 && tm.die2 != 0) {
+    		console.log("Dice=" + tm.die1 + ":" + tm.die2);
+    		drawDice(tm.die1, tm.die2);
+    	}
+    });
+    
 	let sessionId = $('div#gameSpace').attr("data-sessionId");
 	var payload = JSON.stringify( { 'sessionId':sessionId } );
 	stomp.send('/stomp/toba/getGame', {}, payload);
@@ -654,6 +658,11 @@ $(document).on('click', '#btnStep', function() {
 	stomp.send('/stomp/toba/getNextStep', {}, payload);
 });
 
+$(document).on('click', '#btnRollDice', function() {
+	let sessionId = $('div#gameSpace').attr("data-sessionId");
+	var payload = JSON.stringify( { 'sessionId':sessionId } );
+	stomp.send('/stomp/toba/rollDice', {}, payload);
+});
 
 
 
