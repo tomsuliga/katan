@@ -14,11 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.suliga.toba.model.Game;
-import org.suliga.toba.model.Improvement;
-import org.suliga.toba.model.Owner;
-import org.suliga.toba.model.Road;
-import org.suliga.toba.model.TobaMessage;
-import org.suliga.toba.model.Vertex;
 
 @Controller
 public class MainController {
@@ -58,35 +53,39 @@ public class MainController {
 	@MessageMapping("/toba/getNextStep")
 	public void handleGetNextStep(String sessionId) {
 		//logger.info("sessionId = " + sessionId);
-		TobaMessage tm = new TobaMessage();
 		Game game =  games.get(sessionId);
 		
 		// temp - first 8 moves
-		if (game.getNumTurns() >= 8) {
+		if (game.getCurrentTurn() > 8) {
 			return;
 		}
 		
+		game.doBestPlacementMove();
+		game.endTurn();
+		simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
+		
+/*
 		class Moves {
-			Owner owner;
+			Player player;
 			Improvement improvement;
 			int v1;
 			int v2;
-			Moves(Owner owner, Improvement improvement, int v1, int v2) {
-				this.owner = owner;
+			Moves(Player player, Improvement improvement, int v1, int v2) {
+				this.player = player;
 				this.improvement = improvement;
 				this.v1 = v1;
 				this.v2 = v2;
 			}
 		}
 		Moves[] allMoves = new Moves[8];
-		allMoves[0] = new Moves(Owner.P1, Improvement.FORT, 51, 66);
-		allMoves[1] = new Moves(Owner.P2, Improvement.FORT, 109, 124);
-		allMoves[2] = new Moves(Owner.P3, Improvement.FORT, 157, 171);
-		allMoves[3] = new Moves(Owner.P4, Improvement.FORT, 99, 84);
-		allMoves[4] = new Moves(Owner.P4, Improvement.FORT, 144, 130);
-		allMoves[5] = new Moves(Owner.P3, Improvement.FORT, 155, 171);
-		allMoves[6] = new Moves(Owner.P2, Improvement.FORT, 111, 95);
-		allMoves[7] = new Moves(Owner.P1, Improvement.CASTLE, 68, 84);
+		allMoves[0] = new Moves(Player.P1, Improvement.FORT, 51, 66);
+		allMoves[1] = new Moves(Player.P2, Improvement.FORT, 109, 124);
+		allMoves[2] = new Moves(Player.P3, Improvement.FORT, 157, 171);
+		allMoves[3] = new Moves(Player.P4, Improvement.FORT, 99, 84);
+		allMoves[4] = new Moves(Player.P4, Improvement.FORT, 144, 130);
+		allMoves[5] = new Moves(Player.P3, Improvement.FORT, 155, 171);
+		allMoves[6] = new Moves(Player.P2, Improvement.FORT, 111, 95);
+		allMoves[7] = new Moves(Player.P1, Improvement.CASTLE, 68, 84);
 		
 		// Different each time called 0 - 7
 		Moves thisMove = allMoves[game.getNumTurns()];
@@ -94,28 +93,27 @@ public class MainController {
 		Vertex vertex1 = game.getAdjMap().get(thisMove.v1);
 		Vertex vertex2 = game.getAdjMap().get(thisMove.v2);
 		vertex1.setImprovement(thisMove.improvement);
-		vertex1.setOwner(thisMove.owner);
-		Road road = new Road(thisMove.owner, vertex1, vertex2);
+		vertex1.setPlayer(thisMove.player);
+		Road road = new Road(thisMove.player, vertex1, vertex2);
 		vertex1.addRoad(road);
 		vertex2.addRoad(road);
 		game.addRoad(road);
-		tm.setRoad1(road);
-		tm.setVertex1(vertex1);
+		game.setRoad1(road);
+		game.setVertex1(vertex1);
 		if (thisMove.improvement == Improvement.CASTLE) {
-			game.addNumCastles(thisMove.owner.ordinal()-1);
+			game.addNumCastles(thisMove.player.ordinal()-1);
 		} else {
-			game.addNumForts(thisMove.owner.ordinal()-1);
+			game.addNumForts(thisMove.player.ordinal()-1);
 		}
 		// Give player resource cards for second turn
 		if (game.getNumTurns() > 3) {
-			logger.info("Time to get cards for: " + thisMove.owner);
+			logger.info("Time to get cards for: " + thisMove.player);
 			game.handOutResourcesForVertex(vertex1);
 		}
 		game.endTurn();
-		game.setTobaMessage(tm);
 		
-		simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
-		
+		simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);		
+
 		// temp longest road
 		if (game.getNumTurns() == 1) {
 			int[][] roads = { {66,82}, {82,97}, {97,111}, {111,126} };
@@ -124,32 +122,28 @@ public class MainController {
 				int n2 = roads[i][1];
 				Vertex v1 = game.getAdjMap().get(n1);
 				Vertex v2 = game.getAdjMap().get(n2);
-				Road r = new Road(Owner.P1, v1, v2);
+				Road r = new Road(Player.P1, v1, v2);
 				v1.addRoad(r);
 				v2.addRoad(r);
 				game.addRoad(r);
-				tm.setRoad1(r);
-				game.setTobaMessage(tm);
+				game.setRoad1(r);
 				simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
 			}
-		}		
+		}
+*/				
 	}
 	
 	@MessageMapping("/toba/rollDice")
 	public void handleRollDice(String sessionId) {
 		//logger.info("sessionId = " + sessionId);
-		TobaMessage tm = new TobaMessage();
-		tm.rollDice();
 		Game game =  games.get(sessionId);
-		game.setTobaMessage(tm);
+		game.rollDice();
 		simpMessagingTemplate.convertAndSend("/topic/result/diceRolled", game);
 	}
 
 	@MessageMapping("/toba/newGame")
 	public void handleNewGame(String sessionId) {
 		//logger.info("sessionId = " + sessionId);
-		TobaMessage tm = new TobaMessage();
-		tm.rollDice();
 		Game game =  games.get(sessionId);
 		game.init();
 		simpMessagingTemplate.convertAndSend("/topic/result/newGame", game);

@@ -37,6 +37,16 @@ public class Plot {
 	public void setResource(Resource resource) {
 		this.resource = resource;
 	}
+	public int getDieRated() {
+		switch (die) {
+		case 2: case 12: return 1;
+		case 3: case 11: return 2;
+		case 4: case 10: return 3;
+		case 5: case 9: return 4;
+		case 6: case 8: return 5;
+		}
+		return 0;
+	}
 	
 	@Override
 	public String toString() {

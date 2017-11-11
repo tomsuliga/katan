@@ -102,7 +102,6 @@ div#currentTurnTitle {
 	padding-top: 0;
 	text-align: center;
 	background-color: black;
-	//border-radius: 10px;
 	border-right: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
 	margin: 0 0 0 4em;
@@ -221,7 +220,7 @@ div.ff1 {
 	width: 90%;
 	background-color: inherit;
 	margin-top: 2%;
-	opacity: 0.75;
+	//opacity: 1.0;
 }
 
 div.ff2 {

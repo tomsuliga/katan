@@ -10,6 +10,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,7 +39,9 @@ public class Game {
 	
 	private int[] playerCardsTotal;
 
-	private int numTurns;
+	private int currentTurn;
+	
+	private Player currentPlayer;
 	
 	private int[] numForts;
 	
@@ -47,7 +51,8 @@ public class Game {
 
 	private int[] numLongestRoad;
 		
-	private TobaMessage tobaMessage;
+	private int die1;
+	private int die2;
 	
 	public Game() {}
 	
@@ -71,7 +76,8 @@ public class Game {
 		playerCardsTotal = new int[4];
 		int id = 0;
 		Vertex v = null;
-		numTurns = 0;
+		currentTurn = 1;
+		currentPlayer = Player.P1;
 		
 		String layout[] = {
 				"....x.x.x.x....", // 0 - 14
@@ -158,7 +164,7 @@ public class Game {
 					break;
 				}
 			}
-		}			
+		}
 		
 		// Number of resource plots is either 3 or 4 per type
 		List<Resource> resources = Arrays.asList(
@@ -272,13 +278,101 @@ public class Game {
 				vertexPlotMap.put(pointId, setPlots);
 			}
 		}
+		
+		rateVertices();
 	}
 	
+	private void rateVertices() {
+		verticesList.forEach(v -> {
+			v.setRating(0);
+			Set<Plot> s = vertexPlotMap.get(v.getId());
+			if (s != null) {
+				s.forEach(p -> {
+					v.addRating(p.getDieRated());
+				});
+			}		
+		});
+		Collections.sort(verticesList, (v1,v2) -> v2.getRating() - v1.getRating());
+	}
+
+	public void doBestPlacementMove() {
+		for (int i=0;i<verticesList.size();i++) {
+			Vertex v = verticesList.get(i);
+			if (isImprovementAllowed(v)) {
+				v.setPlayer(currentPlayer);
+				v.setImprovement(Improvement.FORT);
+				addNumForts(currentPlayer.ordinal()-1);
+				if (currentTurn >= 5 && currentTurn <= 8) {
+					handOutResourcesForVertex(v);
+				}
+				// Rewrite this Road code at some point...
+				Set<Integer> pool = v.getAdjVertices();
+				List<Integer> pool2 = pool.stream().collect(Collectors.toList());
+				int id = pool2.get(ThreadLocalRandom.current().nextInt(pool2.size()));
+				Vertex v2 = adjMap.get(id);
+				Road road = new Road(currentPlayer, v, v2);
+				v.addRoad(road);
+				v2.addRoad(road);
+				addRoad(road);
+				break;
+			}
+		}
+	}
+	
+	public boolean isImprovementAllowed(Vertex v) {
+		if (v.getImprovement() != Improvement.NONE) {
+			return false;
+		}
+		
+		boolean[] good = new boolean[1];
+		good[0] = true;
+		v.getAdjVertices().forEach(i -> {
+			Vertex v2 = this.getAdjMap().get(i);
+			if (v2.getImprovement() != Improvement.NONE) {
+				good[0] = false; 
+			}
+		});
+		return good[0];
+	}
+	
+	private void calculateLongestRoad() {
+		numLongestRoad = new int[4];
+		for (int currPlayer=1;currPlayer<5;currPlayer++) {
+			boolean[] pointsVisited = new boolean[240];
+			int[] owner = new int[1];
+			owner[0] = currPlayer;
+			Deque<Road> roadStack = new LinkedList<>();
+			verticesList.forEach(v -> {
+				recursiveLongestRoad(pointsVisited, v, owner, roadStack);
+				pointsVisited[v.getId()] = false;
+			});
+		}
+	}
+	
+	private void recursiveLongestRoad(boolean[] pointsVisited, Vertex v, int[] owner, Deque<Road> roadStack) {
+		pointsVisited[v.getId()] = true;
+		v.getRoads().forEach(r -> {
+			if (r.getPlayer().ordinal() == owner[0]) {
+				if (r != roadStack.peek()) {
+					roadStack.push(r);
+					numLongestRoad[owner[0]-1] = Math.max(numLongestRoad[owner[0]-1], roadStack.size());
+					Vertex nextVertex = adjMap.get(r.getToVertexId());
+					if (!pointsVisited[nextVertex.getId()]) {
+						if (nextVertex.getImprovement() == Improvement.NONE || nextVertex.getPlayer().ordinal() == owner[0]) {
+							recursiveLongestRoad(pointsVisited, nextVertex, owner, roadStack);
+						}
+					}
+					roadStack.pop();
+				}
+			}
+		});
+	}		
+
 	public void handOutResourcesForVertex(Vertex v) {
 		Set<Plot> s = vertexPlotMap.get(v.getId());
 		if (s != null) {
 			s.forEach(p -> {
-				int i = v.getOwner().ordinal()-1;
+				int i = v.getPlayer().ordinal()-1;
 				int j = p.getResource().ordinal()-1;
 				playerCards[i][j]++;
 				playerCardsTotal[i]++;
@@ -328,24 +422,34 @@ public class Game {
 		this.sessionId = sessionId;
 	}
 
-	public int getNumTurns() {
-		return numTurns;
+	public int getCurrentTurn() {
+		return currentTurn;
 	}
 
-	public void setNumTurns(int numTurns) {
-		this.numTurns = numTurns;
+	public Player getCurrentPlayer() {
+		return currentPlayer;
 	}
-	
+
 	public void endTurn() {
-		numTurns++;
-	}
-
-	public TobaMessage getTobaMessage() {
-		return tobaMessage;
-	}
-
-	public void setTobaMessage(TobaMessage tobaMessage) {
-		this.tobaMessage = tobaMessage;
+		currentTurn++;
+		
+		switch (currentPlayer) {
+		case P1:
+			currentPlayer = Player.P2;
+			break;
+		case P2:
+			currentPlayer = Player.P3;
+			break;
+		case P3:
+			currentPlayer = Player.P4;
+			break;
+		case P4:
+			currentPlayer = Player.P1;
+			break;
+		case NONE:
+		default:
+			break;
+		}
 	}
 
 	public int[] getNumForts() {
@@ -409,40 +513,18 @@ public class Game {
 		return playerCardsTotal;
 	}
 
-	private void calculateLongestRoad() {
-		numLongestRoad = new int[4];
-		for (int currPlayer=1;currPlayer<5;currPlayer++) {
-			boolean[] pointsVisited = new boolean[240];
-			int[] owner = new int[1];
-			owner[0] = currPlayer;
-			Deque<Road> roadStack = new LinkedList<>();
-			verticesList.forEach(v -> {
-				recursiveLongestRoad(pointsVisited, v, owner, roadStack);
-				pointsVisited[v.getId()] = false;
-			});
-		}
+	public int getDie1() {
+		return die1;
+	}
+
+	public int getDie2() {
+		return die2;
 	}
 	
-	private void recursiveLongestRoad(boolean[] pointsVisited, Vertex v, int[] owner, Deque<Road> roadStack) {
-		pointsVisited[v.getId()] = true;
-		v.getRoads().forEach(r -> {
-			if (r.getOwner().ordinal() == owner[0]) {
-				if (r != roadStack.peek()) {
-					roadStack.push(r);
-					//logger.info("push r: " + r  + "  = " + roadStack.size());
-					numLongestRoad[owner[0]-1] = Math.max(numLongestRoad[owner[0]-1], roadStack.size());
-					Vertex nextVertex = adjMap.get(r.getToVertexId());
-					if (!pointsVisited[nextVertex.getId()]) {
-						if (nextVertex.getImprovement() == Improvement.NONE || nextVertex.getOwner().ordinal() == owner[0]) {
-							recursiveLongestRoad(pointsVisited, nextVertex, owner, roadStack);
-						}
-					}
-					Road rp = roadStack.pop();
-					//logger.info("pop rp: " + rp);
-				}
-			}
-		});
-	}	
+	public void rollDice() {
+		die1 = ThreadLocalRandom.current().nextInt(6) + 1;
+		die2 = ThreadLocalRandom.current().nextInt(6) + 1;
+	}
 }
 
 

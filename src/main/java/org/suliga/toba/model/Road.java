@@ -3,7 +3,7 @@ package org.suliga.toba.model;
 import java.util.Objects;
 
 public class Road {
-	private Owner owner;
+	private Player player;
 	private int fromVertexId;
 	private int fromCol;
 	private int fromRow;
@@ -11,12 +11,12 @@ public class Road {
 	private int toCol;
 	private int toRow;
 	
-	public Road(Owner owner, Vertex fromVertex, Vertex toVertex) {
-		Objects.requireNonNull(owner);
+	public Road(Player player, Vertex fromVertex, Vertex toVertex) {
+		Objects.requireNonNull(player);
 		Objects.requireNonNull(fromVertex);
 		Objects.requireNonNull(toVertex);
 				
-		this.owner = owner;
+		this.player = player;
 		this.fromVertexId = fromVertex.getId();
 		this.fromCol = fromVertex.getCol();
 		this.fromRow = fromVertex.getRow();
@@ -25,12 +25,12 @@ public class Road {
 		this.toRow = toVertex.getRow();
 	}
 
-	public Owner getOwner() {
-		return owner;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setOwner(Owner owner) {
-		this.owner = owner;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 
 	public int getFromVertexId() {
@@ -83,7 +83,7 @@ public class Road {
 	
 	@Override
 	public String toString() {
-		return "Road: " + owner.toString() + ", " + fromVertexId + ", " + fromCol + ":" + fromRow + ", " + toVertexId + ", " + toCol + ":" + toRow;
+		return "Road: " + player.toString() + ", " + fromVertexId + ", " + fromCol + ":" + fromRow + ", " + toVertexId + ", " + toCol + ":" + toRow;
 	}
 }
 

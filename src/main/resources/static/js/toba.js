@@ -9,6 +9,7 @@ var roads;
 var playerCards;
 let separation = 80;
 let xHexOffset = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
+let resourceAlpha = 1.0;
 
 var imgWheat = new Image();
 imgWheat.src = "img/wheat.jpg";
@@ -38,6 +39,8 @@ function drawBoard() {
    	drawPlots();
 	drawRoads();
    	drawImprovements();
+   	drawPlayerStatusNumbers();
+   	drawDice();
 }
 
 function drawRoads() {
@@ -48,8 +51,8 @@ function drawRoads() {
 }
 
 function drawRoad(road) {
-	console.log("drawRoad " + road.owner + ", " + road.fromCol + ", " + road.fromRow + ", " + road.toCol + ", " + road.toRow);
-	drawLine(road.owner, road.fromCol, road.fromRow, road.toCol, road.toRow);
+	console.log("drawRoad " + road.player + ", " + road.fromCol + ", " + road.fromRow + ", " + road.toCol + ", " + road.toRow);
+	drawLine(road.player, road.fromCol, road.fromRow, road.toCol, road.toRow);
 }
 
 function drawSpots() {
@@ -83,20 +86,53 @@ function drawLines() {
 	}
 }
 
+function drawPlayerStatusNumbers() {
+	for (let i=0;i<4;i++) {
+	   	if (game.numVictoryPoints[i] != 0) {
+    		$('div#numVictoryPoints' + (i+1)).text(game.numVictoryPoints[i]);
+    	}
+   	}
+	for (let i=0;i<4;i++) {
+    	if (game.numLongestRoad[i] != 0) {
+    		$('div#numLongestRoad' + (i+1)).text(game.numLongestRoad[i]);
+    	}
+	}
+	for (let i=0;i<4;i++) {
+    	if (game.numForts[i] != 0) {
+    		$('div#numForts' + (i+1)).text(game.numForts[i]);
+    	}
+	}    	
+	for (let i=0;i<4;i++) {
+    	if (game.numCastles[i] != 0) {
+    		$('div#numCastles' + (i+1)).text(game.numCastles[i]);
+    	}
+	}
+	
+	playerCards = game.playerCards;
+	for (let i=0;i<5;i++) {
+		$('div#numResourceCards' + (i+1)).text(playerCards[0][i]);  
+	}
+	let playerCardsTotal = game.playerCardsTotal;
+	for (let i=0;i<4;i++) {
+		$('div#totalAllCards' + (i+1)).text(playerCardsTotal[i]);  
+	}
+	
+}
+
 function drawImprovements() {
 	for (let row=0;row<16;row++) {
 		for (let col=0;col<15;col++) {
-			drawImprovement(col,row, vertices[col][row].improvement, vertices[col][row].owner);
+			drawImprovement(col,row, vertices[col][row].improvement, vertices[col][row].player);
 		}
 	}	
 }
 
-function drawImprovement(col,row,improvement,owner) {
+function drawImprovement(col,row,improvement,player) {
 	if (improvement == "NONE") {
 		return;
 	}
 	
-	let color = getOwnerColor(owner);
+	let color = getPlayerColor(player);
 	
 	// Draw large circle first - if needed
 	if (improvement == "CASTLE") {
@@ -133,27 +169,27 @@ function drawImprovement(col,row,improvement,owner) {
 	}
 }
 
-function getOwnerColor(owner) {
+function getPlayerColor(player) {
 	let color = "#bbb";
 	
-	if (owner == "P1") {
+	if (player == "P1") {
 		color = "#00f";
-	} else if (owner == "P2") {
+	} else if (player == "P2") {
 		color = "#d00";
-	} else if (owner == "P3") {
+	} else if (player == "P3") {
 		color = "#0d0";
-	} else if (owner == "P4") {
+	} else if (player == "P4") {
 		color = "#dd0";
 	}
 	
 	return color;
 }
 
-function drawLine(owner, col, row, col2, row2) {
+function drawLine(player, col, row, col2, row2) {
 	let fromPoint = getXY(col,row);
 	let toPoint = getXY(col2,row2);	
 	ctx.beginPath();
-	if (owner == "NONE") {
+	if (player == "NONE") {
 		ctx.lineWidth = 2;
 	    ctx.strokeStyle = '#000';
 	} else {
@@ -164,7 +200,7 @@ function drawLine(owner, col, row, col2, row2) {
 		ctx.stroke();
 
 		ctx.lineWidth = 12;
-	    ctx.strokeStyle = getOwnerColor(owner);
+	    ctx.strokeStyle = getPlayerColor(player);
 	}
     ctx.moveTo(fromPoint[0], fromPoint[1]);
 	ctx.lineTo(toPoint[0], toPoint[1]);
@@ -172,16 +208,16 @@ function drawLine(owner, col, row, col2, row2) {
 	//console.log("lineIt: " + separation + "," + x + ", " + fromPoint[0] + "," + fromPoint[1] + "," + toPoint[0] + "," + toPoint[1]);
 }
 
-function drawLineHarbor(owner, col, row, col2, row2) {
+function drawLineHarbor(player, col, row, col2, row2) {
 	let fromPoint = getXY(col,row);
 	let toPoint = getXY(col2,row2);	
 	ctx.beginPath();
-	if (owner == "NONE") {
+	if (player == "NONE") {
 		ctx.lineWidth = 2;
 	    ctx.strokeStyle = '#000';
 	} else {
 		ctx.lineWidth = 12;
-	    ctx.strokeStyle = getOwnerColor(owner);
+	    ctx.strokeStyle = getPlayerColor(player);
 	}
     ctx.moveTo(fromPoint[0], fromPoint[1]);
 	ctx.lineTo(toPoint[0], toPoint[1]);
@@ -275,7 +311,7 @@ function drawPlots() {
 			
 		    //context.fillRect(0, 0, 300, 300);
 			if (plots[i].resource != "WATER" && plots[i].resource != "ROBBER") {
-				ctx.globalAlpha = 0.75;
+			ctx.globalAlpha = resourceAlpha;
 			}
 			ctx.fill();
 			ctx.globalAlpha = 1.0;
@@ -362,6 +398,7 @@ function drawPlots() {
 				ctx.closePath();
 				
 				if (die <= 1) {
+					ctx.globalAlpha = resourceAlpha;
 					ctx.fillStyle = "#00b";
 					if (die == -1) ctx.fillStyle = ctx.createPattern(imgWheat, "repeat");
 					if (die == -2) ctx.fillStyle = ctx.createPattern(imgGrass, "repeat");
@@ -376,7 +413,7 @@ function drawPlots() {
 				}
 				
 				ctx.fill();
-				//ctx.globalAlpha = 1.0;
+				ctx.globalAlpha = 1.0;
 				
 				// Circle border
 				ctx.lineWidth = 1;
@@ -506,12 +543,16 @@ function getXY(col, row)
 	return [finalX, finalY];
 }
 
-function drawDice(die1, die2) {
+function drawDice() {
 	let xy = getXY(7,8);
 	let side = 45;
 	
-	drawDie(die1, side, xy[0] - 60, xy[1] - 45, "#b00", "#000");
-	drawDie(die2, side, xy[0] + 15, xy[1] - 45, "#000", "#b00");
+	if (game.die1 != 0) {
+		drawDie(game.die1, side, xy[0] - 60, xy[1] - 45, "#b00", "#000");
+	}
+	if (game.die2 != 0) {
+		drawDie(game.die2, side, xy[0] + 15, xy[1] - 45, "#000", "#b00");
+	}
 }
 
 function drawDie(die, side,x,y,color1,color2) {
@@ -608,58 +649,21 @@ stomp.connect({}, function(frame) {
    });
 
     stomp.subscribe('/topic/result/doNextStep', function (message) {
-    	let game = JSON.parse(message.body);
-    	let tm = game.tobaMessage;
-    	if (tm.road1 != null) {
-    		drawRoad(tm.road1);
-    	}
-    	if (tm.vertex1 != null) {
-    		let v = tm.vertex1;
-    		drawImprovement(v.col, v.row, v.improvement, v.owner);
-    	}    	
-    	for (let i=0;i<4;i++) {
-    	   	if (game.numVictoryPoints[i] != 0) {
-        		$('div#numVictoryPoints' + (i+1)).text(game.numVictoryPoints[i]);
-        	}
-       	}
-    	for (let i=0;i<4;i++) {
-        	if (game.numLongestRoad[i] != 0) {
-        		$('div#numLongestRoad' + (i+1)).text(game.numLongestRoad[i]);
-        	}
-    	}
-    	for (let i=0;i<4;i++) {
-        	if (game.numForts[i] != 0) {
-        		$('div#numForts' + (i+1)).text(game.numForts[i]);
-        	}
-    	}    	
-    	for (let i=0;i<4;i++) {
-        	if (game.numCastles[i] != 0) {
-        		$('div#numCastles' + (i+1)).text(game.numCastles[i]);
-        	}
-    	}
-    	
-    	playerCards = game.playerCards;
-    	for (let i=0;i<5;i++) {
-    		$('div#numResourceCards' + (i+1)).text(playerCards[0][i]);  
-    	}
-    	let playerCardsTotal = game.playerCardsTotal;
-    	for (let i=0;i<4;i++) {
-    		$('div#totalAllCards' + (i+1)).text(playerCardsTotal[i]);  
-    	}
+    	game = JSON.parse(message.body);
+   	   	vertices = game.vertices;
+       	plots = game.plots;
+       	roads = game.roads;
+       	playerCards = game.playerCards;
+       	drawBoard();
    });
     
     stomp.subscribe('/topic/result/diceRolled', function (message) {
-    	let game = JSON.parse(message.body);
-    	let tm = game.tobaMessage;
-    	if (tm.die1 != 0 && tm.die2 != 0) {
-    		console.log("Dice=" + tm.die1 + ":" + tm.die2);
-    		drawDice(tm.die1, tm.die2);
-    	}
+    	game = JSON.parse(message.body);
+   		drawDice();
     });
     
     stomp.subscribe('/topic/result/newGame', function (message) {
-    	let game = JSON.parse(message.body);
-    	let tm = game.tobaMessage;
+    	game = JSON.parse(message.body);
     	location.reload();
     });
 

@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 public class Vertex {
-	private Owner owner;
+	private Player player;
 	private boolean hidden;
 	private Improvement improvement; // Fort or Castle on a Vertex
 	private int id;
@@ -14,6 +14,7 @@ public class Vertex {
 	private List<Road> roads;
 	private int col;
 	private int row;
+	private int rating;
 	
 	public Vertex() {}
 
@@ -23,7 +24,7 @@ public class Vertex {
 		this.col = col;
 		this.row = row;
 		this.improvement = Improvement.NONE;
-		this.owner = Owner.NONE;
+		this.player = Player.NONE;
 		adjVertices = new HashSet<>();
 		roads = new ArrayList<>();
 	}
@@ -44,17 +45,17 @@ public class Vertex {
 		this.improvement = improvement;
 	}
 
-	public Owner getOwner() {
-		return owner;
+	public Player getPlayer() {
+		return player;
 	}
 
-	public void setOwner(Owner owner) {
-		this.owner = owner;
+	public void setPlayer(Player player) {
+		this.player = player;
 	}
 	
 	@Override
 	public String toString() {
-		return "Vertex " + owner.toString() + ", id=" + id + ", col:row=" + col + ":" + row;
+		return "Vertex " + player.toString() + ", id=" + id + ", col:row=" + col + ":" + row + ", rating=" + rating;
 	}
 
 	public int getId() {
@@ -88,6 +89,17 @@ public class Vertex {
 		roads.add(road);
 	}
 
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+	
+	public void addRating(int amount) {
+		rating += amount;
+	}
 }
 
 
