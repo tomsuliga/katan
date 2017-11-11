@@ -6,20 +6,20 @@ var game;
 var vertices;
 var plots;
 var roads;
+var playerCards;
 let separation = 80;
 let xHexOffset = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
 
-var imgGreen = new Image();
-imgGreen.src = "img/rubies.jpg";
-var imgRed = new Image();
-imgRed.src = "img/grass.jpg";
-var imgBlue = new Image();
-imgBlue.src = "img/wheat.jpg";
-//imgGreen.onload = init;
-var imgPurple = new Image();
-imgPurple.src = "img/cash.jpg";
-var imgYellow = new Image();
-imgYellow.src = "img/lava.jpg";
+var imgWheat = new Image();
+imgWheat.src = "img/wheat.jpg";
+var imgGrass = new Image();
+imgGrass.src = "img/grass.jpg";
+var imgRubbies = new Image();
+imgRubbies.src = "img/rubies.jpg";
+var imgCash = new Image();
+imgCash.src = "img/cash.jpg";
+var imgLava = new Image();
+imgLava.src = "img/lava.jpg";
 
 function init() {
 	var payload = JSON.stringify( { 'a':'b' } );
@@ -258,19 +258,19 @@ function drawPlots() {
 				robberOffsetY = 32;
 			} else if (plots[i].resource == "ONE") {
 				//ctx.fillStyle = "#a44";
-				ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
+				ctx.fillStyle = ctx.createPattern(imgWheat, "repeat");
 			} else if (plots[i].resource == "TWO") {
 				//ctx.fillStyle = "#4a4";
-				ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
+				ctx.fillStyle = ctx.createPattern(imgGrass, "repeat");
 			} else if (plots[i].resource == "THREE") {
 				//ctx.fillStyle = "#44a";
-				ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
+				ctx.fillStyle = ctx.createPattern(imgRubbies, "repeat");
 			} else if (plots[i].resource == "FOUR") {
 				//ctx.fillStyle = "#a4a";
-				ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
+				ctx.fillStyle = ctx.createPattern(imgCash, "repeat");
 			} else if (plots[i].resource == "FIVE") {
 				//ctx.fillStyle = "#aa4";
-				ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");
+				ctx.fillStyle = ctx.createPattern(imgLava, "repeat");
 			}
 			
 		    //context.fillRect(0, 0, 300, 300);
@@ -363,11 +363,11 @@ function drawPlots() {
 				
 				if (die <= 1) {
 					ctx.fillStyle = "#00b";
-					if (die == -1) ctx.fillStyle = ctx.createPattern(imgRed, "repeat");
-					if (die == -2) ctx.fillStyle = ctx.createPattern(imgGreen, "repeat");
-					if (die == -3) ctx.fillStyle = ctx.createPattern(imgBlue, "repeat");
-					if (die == -4) ctx.fillStyle = ctx.createPattern(imgPurple, "repeat");
-					if (die == -5) ctx.fillStyle = ctx.createPattern(imgYellow, "repeat");					
+					if (die == -1) ctx.fillStyle = ctx.createPattern(imgWheat, "repeat");
+					if (die == -2) ctx.fillStyle = ctx.createPattern(imgGrass, "repeat");
+					if (die == -3) ctx.fillStyle = ctx.createPattern(imgRubbies, "repeat");
+					if (die == -4) ctx.fillStyle = ctx.createPattern(imgCash, "repeat");
+					if (die == -5) ctx.fillStyle = ctx.createPattern(imgLava, "repeat");					
 				} else if (die == 7) {
 					ctx.fillStyle = "#000";
 				} else {
@@ -602,6 +602,7 @@ stomp.connect({}, function(frame) {
     	vertices = game.vertices;
     	plots = game.plots;
     	roads = game.roads;
+    	playerCards = game.playerCards;
     	console.log("roads=" + roads)
        	drawBoard();
    });
@@ -635,6 +636,15 @@ stomp.connect({}, function(frame) {
         	if (game.numCastles[i] != 0) {
         		$('div#numCastles' + (i+1)).text(game.numCastles[i]);
         	}
+    	}
+    	
+    	playerCards = game.playerCards;
+    	for (let i=0;i<5;i++) {
+    		$('div#numResourceCards' + (i+1)).text(playerCards[0][i]);  
+    	}
+    	let playerCardsTotal = game.playerCardsTotal;
+    	for (let i=0;i<4;i++) {
+    		$('div#totalAllCards' + (i+1)).text(playerCardsTotal[i]);  
     	}
    });
     

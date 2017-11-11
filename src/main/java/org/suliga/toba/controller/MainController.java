@@ -46,7 +46,7 @@ public class MainController {
 	
 	@MessageMapping("/toba/getGame")
 	public void handleGetGame(String sessionId) {
-		logger.info("sessionId = " + sessionId);
+		//logger.info("sessionId = " + sessionId);
 		Game game = games.get(sessionId);
 		if (game == null) {
 			game = new Game(sessionId);
@@ -57,7 +57,7 @@ public class MainController {
 	
 	@MessageMapping("/toba/getNextStep")
 	public void handleGetNextStep(String sessionId) {
-		logger.info("sessionId = " + sessionId);
+		//logger.info("sessionId = " + sessionId);
 		TobaMessage tm = new TobaMessage();
 		Game game =  games.get(sessionId);
 		
@@ -88,6 +88,7 @@ public class MainController {
 		allMoves[6] = new Moves(Owner.P2, Improvement.FORT, 111, 95);
 		allMoves[7] = new Moves(Owner.P1, Improvement.CASTLE, 68, 84);
 		
+		// Different each time called 0 - 7
 		Moves thisMove = allMoves[game.getNumTurns()];
 		
 		Vertex vertex1 = game.getAdjMap().get(thisMove.v1);
@@ -104,6 +105,11 @@ public class MainController {
 			game.addNumCastles(thisMove.owner.ordinal()-1);
 		} else {
 			game.addNumForts(thisMove.owner.ordinal()-1);
+		}
+		// Give player resource cards for second turn
+		if (game.getNumTurns() > 3) {
+			logger.info("Time to get cards for: " + thisMove.owner);
+			game.handOutResourcesForVertex(vertex1);
 		}
 		game.endTurn();
 		game.setTobaMessage(tm);
@@ -126,12 +132,12 @@ public class MainController {
 				game.setTobaMessage(tm);
 				simpMessagingTemplate.convertAndSend("/topic/result/doNextStep", game);
 			}
-		}
+		}		
 	}
 	
 	@MessageMapping("/toba/rollDice")
 	public void handleRollDice(String sessionId) {
-		logger.info("sessionId = " + sessionId);
+		//logger.info("sessionId = " + sessionId);
 		TobaMessage tm = new TobaMessage();
 		tm.rollDice();
 		Game game =  games.get(sessionId);
@@ -141,7 +147,7 @@ public class MainController {
 
 	@MessageMapping("/toba/newGame")
 	public void handleNewGame(String sessionId) {
-		logger.info("sessionId = " + sessionId);
+		//logger.info("sessionId = " + sessionId);
 		TobaMessage tm = new TobaMessage();
 		tm.rollDice();
 		Game game =  games.get(sessionId);

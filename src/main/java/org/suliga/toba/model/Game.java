@@ -5,9 +5,11 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,10 +26,16 @@ public class Game {
 	private List<Vertex> verticesList;
 	
 	private Map<Integer, Vertex> adjMap;
+
+	private Map<Integer, Set<Plot>> vertexPlotMap;
 	
 	private List<Plot> plots;
 
 	private List<Road> roads;
+	
+	private int[][] playerCards;
+	
+	private int[] playerCardsTotal;
 
 	private int numTurns;
 	
@@ -52,12 +60,15 @@ public class Game {
 		vertices = new Vertex[NUM_COLS][NUM_ROWS];
 		verticesList = new ArrayList<>();
 		adjMap  = new HashMap<>();
+		vertexPlotMap = new HashMap<>();
 		plots = new ArrayList<>();
 		roads = new ArrayList<>();
 		numForts = new int[4];
 		numCastles = new int[4];
 		numVictoryPoints = new int[4];
 		numLongestRoad = new int[4];
+		playerCards = new int[4][5];
+		playerCardsTotal = new int[4];
 		int id = 0;
 		Vertex v = null;
 		numTurns = 0;
@@ -237,8 +248,44 @@ public class Game {
 		plots.add(new Plot(2,6,Resource.WATER,1));
 		plots.add(new Plot(3,6,Resource.WATER,0));
 		plots.add(new Plot(4,6,Resource.WATER,-5));
-		plots.add(new Plot(5,6,Resource.WATER,0));		
-}
+		plots.add(new Plot(5,6,Resource.WATER,0));	
+		
+		// Needed for all 18 plots, each plot has 6 points
+		
+		int[][] pointTips = { 
+					{5,35}, {6,37}, {7,39}, 
+					{10,64}, {11,66}, {12,68}, {13,70},
+					{16,93}, {17,95}, {19,99}, {20,101},
+					{23,124}, {24,126}, {25,128}, {26,130},
+					{29,155}, {30,157}, {31,159} };
+		
+		int[] pointOffsets = { 0, 14, 16, 29, 31, 45 };
+		
+		for (int i=0;i<pointTips.length;i++) {
+			for (int j=0;j<pointOffsets.length;j++) {
+				int pointId = pointTips[i][1] + pointOffsets[j];
+				Set<Plot> setPlots = vertexPlotMap.get(pointId);
+				if (setPlots == null) {
+					setPlots = new HashSet<>();
+				}
+				setPlots.add(plots.get(pointTips[i][0]));
+				vertexPlotMap.put(pointId, setPlots);
+			}
+		}
+	}
+	
+	public void handOutResourcesForVertex(Vertex v) {
+		Set<Plot> s = vertexPlotMap.get(v.getId());
+		if (s != null) {
+			s.forEach(p -> {
+				int i = v.getOwner().ordinal()-1;
+				int j = p.getResource().ordinal()-1;
+				playerCards[i][j]++;
+				playerCardsTotal[i]++;
+				logger.info("i,j=" + i + "," + j + ", value=" + playerCards[i][j]);
+			});
+		}
+	}
 	
 	private void buildHexEdges(int id) {
 		// These are the 6 edges - each with a From and a To
@@ -352,6 +399,14 @@ public class Game {
 
 	public List<Road> getRoads() {
 		return roads;
+	}
+
+	public int[][] getPlayerCards() {
+		return playerCards;
+	}
+
+	public int[] getPlayerCardsTotal() {
+		return playerCardsTotal;
 	}
 
 	private void calculateLongestRoad() {
