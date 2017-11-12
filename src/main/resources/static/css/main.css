@@ -98,13 +98,16 @@ div#currentTurnTitle {
 	letter-spacing: 0.1em;
 	color: #00f;
 	width: 850px;
-	height: 75px;
+	height: 105px;
 	padding-top: 0;
 	text-align: center;
 	background-color: black;
 	border-right: 1px solid #aaa;
 	border-bottom: 1px solid #aaa;
 	margin: 0 0 0 4em;
+	position: relative;
+  	top: -30px;
+	
 }
 div#myLine {
 	width: 400px;

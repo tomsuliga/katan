@@ -34,13 +34,13 @@ $(document).ready(function() {
 });
 
 function drawBoard() {
-	drawSpots();
-	drawLines();
-   	drawPlots();
+	//drawSpots();
+	//drawLines();
+   	drawPlots(); // includes lines, plots, dice numbers
 	drawRoads();
    	drawImprovements();
-   	drawPlayerStatusNumbers();
    	drawDice();
+   	setPlayerStatusNumbers();
 }
 
 function drawRoads() {
@@ -86,7 +86,7 @@ function drawLines() {
 	}
 }
 
-function drawPlayerStatusNumbers() {
+function setPlayerStatusNumbers() {
 	for (let i=0;i<4;i++) {
 	   	if (game.numVictoryPoints[i] != 0) {
     		$('div#numVictoryPoints' + (i+1)).text(game.numVictoryPoints[i]);
