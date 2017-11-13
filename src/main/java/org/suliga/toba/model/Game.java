@@ -78,6 +78,8 @@ public class Game {
 		Vertex v = null;
 		currentTurn = 1;
 		currentPlayer = Player.P1;
+		die1 = 0;
+		die2 = 0;
 		
 		String layout[] = {
 				"....x.x.x.x....", // 0 - 14

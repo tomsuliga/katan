@@ -10,6 +10,7 @@ var playerCards;
 let separation = 80;
 let xHexOffset = Math.sqrt(separation*separation - ((separation/2)*(separation/2)));
 let resourceAlpha = 1.0;
+let lastDiceTotal = 0;
 
 var imgWheat = new Image();
 imgWheat.src = "img/wheat.jpg";
@@ -36,8 +37,8 @@ $(document).ready(function() {
 function drawBoard() {
    	drawPlots(); 					// Lines, ocean and resource plots
 	drawRoads(); 					// Use black border and player colors
-   	drawImprovements(); 			// Forts and castles
    	drawHarborPiers(); 				// Dotted piers
+   	drawImprovements(); 			// Forts and castles
    	drawPlotCirclesAndNumbers(); 	// Plot dice numbers, harbor exchange rate, robber
    	drawDice(); 					// Two die
    	setPlayerStatusNumbers();
@@ -312,6 +313,11 @@ function drawPlotCirclesAndNumbers() {
 			continue;
 		}
 			
+		drawSinglePlotCircleAndNumber(die, i, 1, "#000", 25);
+	}
+}
+
+function drawSinglePlotCircleAndNumber(die, i, borderSize, borderColor, baseRadius) {
 		let col = plots[i].col * 2;
 		let row = plots[i].row * 2;			
 		let colOffset = 0;
@@ -329,10 +335,10 @@ function drawPlotCirclesAndNumbers() {
 		}
 
 		// Circle container space
-		let radius = 25;
+		let radius = baseRadius;
 		// 1 == ocean, -1,-2,-3,-4,-5 == harbor exchange rates
 		if (die <= 1) {
-			radius = 30;
+			radius = baseRadius + 5;
 		}
 		ctx.beginPath();
 		ctx.arc(p[0], p[1] + (1.0 * separation) - robberOffsetY, radius, 0, Math.PI*2, true); 
@@ -350,6 +356,9 @@ function drawPlotCirclesAndNumbers() {
 				case -5: ctx.fillStyle = ctx.createPattern(imgLava, "repeat"); break;
 			}
 		} else if (die == 7) {
+			if (borderColor == "#ff0") {
+				borderSize--;
+			}
 			ctx.fillStyle = "#000";
 		} else {
 			//ctx.globalAlpha = 0.75;
@@ -359,8 +368,8 @@ function drawPlotCirclesAndNumbers() {
 		ctx.globalAlpha = 1.0;
 		
 		// Circle border
-		ctx.lineWidth = 1;
-	    ctx.strokeStyle = '#000';
+		ctx.lineWidth = borderSize;
+	    ctx.strokeStyle = borderColor;
 	    ctx.stroke();
 	
 		// Number
@@ -417,7 +426,6 @@ function drawPlotCirclesAndNumbers() {
 			ctx.font = "24px Arial";
 			ctx.fillText(dots, p[0] - 4 - dieOffsetX, p[1] + separation + 10 + dieOffsetY);
 		}
-	}
 }
 
 function getXY(col, row)
@@ -482,6 +490,20 @@ function drawDice() {
 	}
 	if (game.die2 != 0) {
 		drawDie(game.die2, side, xy[0] + 15, xy[1] - 45, "#000", "#b00");
+	}
+	
+	// Highlight plot number(s)
+	let total = game.die1 + game.die2;
+	if (total != 0) {
+		for (let i=0;i<plots.length;i++) {
+			const die = plots[i].die;
+			if (die == total) {
+				drawSinglePlotCircleAndNumber(total, i, 5, "#ff0", 22);
+			} else if (die == lastDiceTotal && lastDiceTotal != 0 && lastDiceTotal != total) {
+				drawSinglePlotCircleAndNumber(lastDiceTotal, i, 1, "#555", 25);				
+			}
+		}
+		lastDiceTotal = total;
 	}
 }
 
@@ -561,6 +583,7 @@ stomp.connect({}, function(frame) {
     
     stomp.subscribe('/topic/result/newGame', function (message) {
     	game = JSON.parse(message.body);
+    	lastDiceTotal = 0;
     	location.reload();
     });
 
