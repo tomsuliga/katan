@@ -23,6 +23,8 @@ imgCash.src = "img/cash.jpg";
 var imgLava = new Image();
 imgLava.src = "img/lava.jpg";
 
+var audioRollDice = new Audio('sound/rollDice.wav');
+
 function init() {
 	var payload = JSON.stringify( { 'a':'b' } );
 	stomp.send('/stomp/toba/getGame', {}, payload);
@@ -577,6 +579,7 @@ stomp.connect({}, function(frame) {
    });
     
     stomp.subscribe('/topic/result/diceRolled', function (message) {
+    	audioRollDice.play();
     	game = JSON.parse(message.body);
    		drawDice();
     });

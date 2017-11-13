@@ -145,8 +145,9 @@ div.resourceImage3 {
 	background-repeat: repeat;
 }
 div.resourceImage4 {
-	background-image: url('/img/cash.jpg');
-	background-repeat: repeat;
+	//background-image: url('/img/cash.jpg');
+	//background-repeat: no-repeat;
+	background: url('/img/cash.jpg') no-repeat center;
 }
 div.resourceImage5 {
 	background-image: url('/img/lava.jpg');
